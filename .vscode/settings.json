@@ -60,13 +60,13 @@
         "*.asset": "yaml",
         "*.meta": "yaml",
         "*.prefab": "yaml",
-        "*.unity": "yaml",
+        "*.unity": "yaml"
     },
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Programming Theory Project.slnx",
+    "dotnet.defaultSolution": "Programming-Theory-Project-2026-07-22_22-06-33.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

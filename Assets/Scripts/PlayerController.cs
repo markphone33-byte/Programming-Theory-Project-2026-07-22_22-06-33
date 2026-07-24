@@ -11,11 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxPitch; // Remove SerializeField later
     [SerializeField] private float currentPitch; // Remove SerializeField later
     private Transform playerCamera;
+    private Rigidbody playerRb;
 
 
     void Awake()
     {
         controls = new InputSystem_Actions();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     void OnEnable()
@@ -43,8 +45,12 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         moveInput = controls.Player.Move.ReadValue<Vector2>();
-        transform.Translate(Vector3.forward * Time.deltaTime * moveInput.y * moveSpeed);
-        transform.Translate(Vector3.right * Time.deltaTime * moveInput.x * moveSpeed);
+        // transform.Translate(Vector3.forward * Time.deltaTime * moveInput.y * moveSpeed);
+        // transform.Translate(Vector3.right * Time.deltaTime * moveInput.x * moveSpeed);
+
+        playerRb.AddForce(transform.forward * Time.deltaTime * moveInput.y * moveSpeed, ForceMode.Impulse);
+        playerRb.AddForce(transform.right * Time.deltaTime * moveInput.x * moveSpeed, ForceMode.Impulse);
+
     }
 
     void LookMovement()
