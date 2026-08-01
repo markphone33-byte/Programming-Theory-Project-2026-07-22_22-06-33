@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerCamera = GameObject.FindWithTag("MainCamera").transform;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -62,7 +64,6 @@ public class PlayerController : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
         currentPitch -= lookInput.y * lookSpeed / 2;
         currentPitch = Mathf.Clamp(currentPitch, -maxPitch, maxPitch);
-
     }
 
     private void Sprint()
@@ -70,11 +71,13 @@ public class PlayerController : MonoBehaviour
         if(controls.Player.Sprint.WasPressedThisFrame())
         {
             moveSpeedMultiplier += 1f;
+            playerCamera.gameObject.GetComponent<Camera>().fieldOfView = 75f;
         }
         
         if(controls.Player.Sprint.WasReleasedThisFrame())
         {
             moveSpeedMultiplier -= 1f;
+            playerCamera.gameObject.GetComponent<Camera>().fieldOfView = 60f;
         }
     }
 }

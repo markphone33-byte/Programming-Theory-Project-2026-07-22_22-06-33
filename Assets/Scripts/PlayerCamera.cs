@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Camera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
     private GameObject player;
     private Vector3 offset;

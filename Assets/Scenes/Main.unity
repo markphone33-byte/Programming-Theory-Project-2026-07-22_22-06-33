@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 104044553}
   - component: {fileID: 104044552}
   - component: {fileID: 104044551}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1734,7 +1734,7 @@ GameObject:
   - component: {fileID: 253051418}
   - component: {fileID: 253051417}
   - component: {fileID: 253051416}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1850,7 +1850,7 @@ GameObject:
   - component: {fileID: 253728408}
   - component: {fileID: 253728412}
   - component: {fileID: 253728413}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2006,7 +2006,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255915036}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2474,7 +2474,7 @@ GameObject:
   - component: {fileID: 345531177}
   - component: {fileID: 345531176}
   - component: {fileID: 345531175}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3600,7 +3600,7 @@ GameObject:
   - component: {fileID: 440798539}
   - component: {fileID: 440798538}
   - component: {fileID: 440798537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4177,13 +4177,13 @@ GameObject:
   - component: {fileID: 498045914}
   - component: {fileID: 498045918}
   - component: {fileID: 498045917}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!195 &498045914
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4285,7 +4285,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1001 &518022924
 PrefabInstance:
@@ -4669,7 +4669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 582928133}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6276,7 +6276,7 @@ GameObject:
   - component: {fileID: 808329666}
   - component: {fileID: 808329669}
   - component: {fileID: 808329670}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -6411,9 +6411,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 808329665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b39433e6ce9d34c6fb0f01a948c24d43, type: 3}
+  m_Script: {fileID: 11500000, guid: 2632905f69f5c43c2ba4fbb5e1d3c541, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Camera
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
 --- !u!1001 &809853914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6526,7 +6526,7 @@ GameObject:
   - component: {fileID: 819427238}
   - component: {fileID: 819427240}
   - component: {fileID: 819427239}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6588,7 +6588,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 0.6132076, g: 0.59531033, b: 0.3268512, a: 1}
-  m_Intensity: 50
+  m_Intensity: 80
   m_Range: 60
   m_SpotAngle: 94.57569
   m_InnerSpotAngle: 0
@@ -7398,7 +7398,7 @@ GameObject:
   - component: {fileID: 922137380}
   - component: {fileID: 922137379}
   - component: {fileID: 922137378}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8286,7 +8286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1019020948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8522,7 +8522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1050572997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10224,7 +10224,7 @@ GameObject:
   - component: {fileID: 1368949121}
   - component: {fileID: 1368949120}
   - component: {fileID: 1368949119}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11864,7 +11864,7 @@ GameObject:
   - component: {fileID: 1552153542}
   - component: {fileID: 1552153541}
   - component: {fileID: 1552153540}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11976,7 +11976,7 @@ GameObject:
   - component: {fileID: 1554118211}
   - component: {fileID: 1554118210}
   - component: {fileID: 1554118209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13754,7 +13754,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -14570,7 +14570,7 @@ GameObject:
   - component: {fileID: 1978143707}
   - component: {fileID: 1978143706}
   - component: {fileID: 1978143705}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15522,7 +15522,7 @@ GameObject:
   - component: {fileID: 2073458875}
   - component: {fileID: 2073458874}
   - component: {fileID: 2073458873}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
