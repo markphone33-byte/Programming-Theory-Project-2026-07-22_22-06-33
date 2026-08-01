@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
     private InputSystem_Actions controls;
     private Vector2 moveInput;
     [SerializeField] private Vector2 lookInput; // Remove SerializeField later
-    [SerializeField] private float moveSpeed; // Remove SerializeField later
+    [SerializeField] private float baseMoveSpeed; // Remove SerializeField later
+    [SerializeField] private float moveSpeedMultiplier;
     [SerializeField] private float lookSpeed; // Remove SerializeField later
     [SerializeField] private float maxPitch; // Remove SerializeField later
     [SerializeField] private float currentPitch; // Remove SerializeField later
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         controls = new InputSystem_Actions();
         playerRb = GetComponent<Rigidbody>();
+        moveSpeedMultiplier = 1;
     }
 
     void OnEnable()
@@ -38,22 +40,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Sprint();
         Movement();
         LookMovement();
     }
 
     private void Movement()
     {
-        moveInput = controls.Player.Move.ReadValue<Vector2>();
-        // transform.Translate(Vector3.forward * Time.deltaTime * moveInput.y * moveSpeed);
-        // transform.Translate(Vector3.right * Time.deltaTime * moveInput.x * moveSpeed);
+        float totalMoveSpeed = baseMoveSpeed * moveSpeedMultiplier;
 
-        playerRb.AddForce(transform.forward * Time.deltaTime * moveInput.y * moveSpeed, ForceMode.Impulse);
-        playerRb.AddForce(transform.right * Time.deltaTime * moveInput.x * moveSpeed, ForceMode.Impulse);
+        moveInput = controls.Player.Move.ReadValue<Vector2>();
+        playerRb.AddForce(transform.forward * Time.deltaTime * moveInput.y * totalMoveSpeed, ForceMode.Impulse);
+        playerRb.AddForce(transform.right * Time.deltaTime * moveInput.x * totalMoveSpeed, ForceMode.Impulse);
 
     }
 
-    void LookMovement()
+    private void LookMovement()
     {
         lookInput = controls.Player.Look.ReadValue<Vector2>();
         transform.Rotate(Vector3.up, lookInput.x * lookSpeed, Space.World);
@@ -61,5 +63,18 @@ public class PlayerController : MonoBehaviour
         currentPitch -= lookInput.y * lookSpeed / 2;
         currentPitch = Mathf.Clamp(currentPitch, -maxPitch, maxPitch);
 
+    }
+
+    private void Sprint()
+    {
+        if(controls.Player.Sprint.WasPressedThisFrame())
+        {
+            moveSpeedMultiplier += 1f;
+        }
+        
+        if(controls.Player.Sprint.WasReleasedThisFrame())
+        {
+            moveSpeedMultiplier -= 1f;
+        }
     }
 }
