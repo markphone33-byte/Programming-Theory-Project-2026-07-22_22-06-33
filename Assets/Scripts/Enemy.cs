@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private float nextUpdateTime;
     [SerializeField] private float updateInterval = 1;
+    [SerializeField] private float moveSpeed;
 
 
     void Awake()
@@ -43,8 +44,7 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(player.position);
         if (agent.path.status == NavMeshPathStatus.PathComplete && distance < 70)
         {
-            agent.speed = 8;
-            Debug.Log("Chase");
+            agent.speed = moveSpeed * 1.5f;
         }
         else
         {
@@ -53,8 +53,7 @@ public class Enemy : MonoBehaviour
             NavMesh.SamplePosition(wanderPosition, out wanderHit, 30, NavMesh.AllAreas);
             agent.SetDestination(wanderHit.position);
             nextUpdateTime += 3;
-            agent.speed = 4;
-            Debug.Log("Wander");
+            agent.speed = moveSpeed;
         }
     }
 }

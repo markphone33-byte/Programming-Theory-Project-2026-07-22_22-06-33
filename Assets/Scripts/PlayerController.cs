@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -68,16 +69,26 @@ public class PlayerController : MonoBehaviour
 
     private void Sprint()
     {
-        if(controls.Player.Sprint.WasPressedThisFrame())
+        if (controls.Player.Sprint.WasPressedThisFrame())
         {
             moveSpeedMultiplier += 1f;
-            playerCamera.gameObject.GetComponent<Camera>().fieldOfView = 75f;
+            StartCoroutine(FOVChange(5, 3f));
         }
-        
-        if(controls.Player.Sprint.WasReleasedThisFrame())
+
+        if (controls.Player.Sprint.WasReleasedThisFrame())
         {
             moveSpeedMultiplier -= 1f;
-            playerCamera.gameObject.GetComponent<Camera>().fieldOfView = 60f;
+            StartCoroutine(FOVChange(5, -3f));
+        }
+    }
+
+    IEnumerator FOVChange(int increase, float increment)
+    {
+        while (increase > 0)
+        {
+            yield return new WaitForSeconds(0.05f);
+            playerCamera.gameObject.GetComponent<Camera>().fieldOfView += increment;
+            increase--;
         }
     }
 }
