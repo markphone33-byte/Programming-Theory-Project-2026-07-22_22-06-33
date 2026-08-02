@@ -27,6 +27,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(agent.remainingDistance < 0.1f)
+        {
+            nextUpdateTime = Time.time;
+        }
         if (Time.time >= nextUpdateTime)
         {
             nextUpdateTime = Time.time + updateInterval;
@@ -52,7 +56,7 @@ public class Enemy : MonoBehaviour
             Vector3 wanderPosition = transform.position + Random.insideUnitSphere * 50;
             NavMesh.SamplePosition(wanderPosition, out wanderHit, 30, NavMesh.AllAreas);
             agent.SetDestination(wanderHit.position);
-            nextUpdateTime += 3;
+            nextUpdateTime += 7;
             agent.speed = moveSpeed;
         }
     }
