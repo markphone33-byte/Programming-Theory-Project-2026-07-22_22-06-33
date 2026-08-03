@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float baseMoveSpeed = 45;
     [SerializeField] private float moveSpeedMultiplier = 1;
     [SerializeField] private float sprintBoost = 0.8f;
-    private Transform playerCamera;
+    private Camera playerCamera;
     private Rigidbody playerRb;
+    private bool isSprinting = false;
 
 
     // Initialize variables
@@ -37,39 +36,51 @@ public class PlayerMovement : MonoBehaviour
     // Initialize references to other game objects
     void Start()
     {
-        playerCamera = GameObject.FindWithTag("MainCamera").transform;
+        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Sprint();
+        moveInput = controls.Player.Move.ReadValue<Vector2>();
+    }
+
+    // Movement is done in FixedUpdate to line up with the physics engine and prevent jittery movement
+    void FixedUpdate()
+    {
         Movement();
     }
 
     private void Movement()
     {
-        float totalMoveSpeed = baseMoveSpeed * moveSpeedMultiplier;
-
-        moveInput = controls.Player.Move.ReadValue<Vector2>();
-        playerRb.AddForce(transform.forward * Time.deltaTime * moveInput.y * totalMoveSpeed, ForceMode.Impulse);
-        playerRb.AddForce(transform.right * Time.deltaTime * moveInput.x * totalMoveSpeed, ForceMode.Impulse);
-
-    }
-
-    // Sprint makes the player move 80% faster
-    private void Sprint()
-    {
-        if (controls.Player.Sprint.WasPressedThisFrame())
+        // Calculates player's speed
+        if (isSprinting)
         {
             moveSpeedMultiplier += sprintBoost;
-            StartCoroutine(FOVChange(15, 3f)); // Increases FOV by 15
         }
+        float totalMoveSpeed = baseMoveSpeed * moveSpeedMultiplier;
 
-        if (controls.Player.Sprint.WasReleasedThisFrame())
+        // Moves the player
+        playerRb.AddForce(transform.forward * Time.fixedDeltaTime * moveInput.y * totalMoveSpeed, ForceMode.Impulse);
+        playerRb.AddForce(transform.right * Time.fixedDeltaTime * moveInput.x * totalMoveSpeed, ForceMode.Impulse);
+
+        moveSpeedMultiplier = 1; // Resets the move speed multiplier
+    }
+
+    private void Sprint()
+    {
+        // If the sprint button is pressed the move speed multiplier is increased and the FOV is increased
+        if (controls.Player.Sprint.IsPressed() && !isSprinting)
         {
-            moveSpeedMultiplier -= sprintBoost;
-            StartCoroutine(FOVChange(15, -3f)); // Reverts FOV to normal
+            isSprinting = true;
+            StartCoroutine(FOVChange(15, 3));
+        }
+        // If the sprint button is released the FOV is decreased and Movement() automatically resets the speed multiplier
+        else if (!controls.Player.Sprint.IsPressed() && isSprinting)
+        {
+            isSprinting = false;
+            StartCoroutine(FOVChange(15, -3));
         }
     }
 
@@ -78,9 +89,9 @@ public class PlayerMovement : MonoBehaviour
     {
         while (amount > 0)
         {
-            yield return new WaitForSeconds(0.05f);
-            playerCamera.gameObject.GetComponent<Camera>().fieldOfView += stepValue;
+            playerCamera.fieldOfView += stepValue;
             amount -= math.abs(stepValue);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }
