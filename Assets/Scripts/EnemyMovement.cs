@@ -44,7 +44,7 @@ public class EnemyMovement : MonoBehaviour
     private void Movement()
     {
         // Chases the player with increased speed if they are within 70 units
-        if (agent.path.status == NavMeshPathStatus.PathComplete && enemyAttackScript.DistanceToPlayer() < 70)
+        if (agent.path.status == NavMeshPathStatus.PathComplete && enemyAttackScript.DistanceToPlayer() < 50)
         {
             agent.SetDestination(player.position);
             agent.speed = moveSpeed * 1.5f;

@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +13,11 @@ public class PlayerMovement : MonoBehaviour
     private Camera playerCamera;
     private Rigidbody playerRb;
     private bool isSprinting = false;
-
+    private bool isExhausted = false;
+    private Slider sprintSlider;
+    private float sprintFOVChange = 15;
+    [SerializeField] private float sprintDuration = 3;
+    [SerializeField] private float sprintRecoveryDuration = 3;
 
     // Initialize variables
     void Awake()
@@ -37,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        sprintSlider = GameObject.FindWithTag("SprintSlider").GetComponent<Slider>();
     }
 
     // Update is called once per frame
@@ -70,17 +76,50 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        // If the sprint button is pressed the move speed multiplier is increased and the FOV is increased
-        if (controls.Player.Sprint.IsPressed() && !isSprinting)
+        // When player tries to sprint
+        if (controls.Player.Sprint.IsPressed())
         {
-            isSprinting = true;
-            StartCoroutine(FOVChange(15, 3));
+            // If the player is starting sprint
+            if (!isSprinting && sprintSlider.value > sprintSlider.minValue && !isExhausted)
+            {
+                isSprinting = true;
+                StartCoroutine(FOVChange(sprintFOVChange, sprintFOVChange / 5)); // FOV increases by sprintFOVChange over 0.25 seconds
+            }
         }
-        // If the sprint button is released the FOV is decreased and Movement() automatically resets the speed multiplier
-        else if (!controls.Player.Sprint.IsPressed() && isSprinting)
+        // When the player is not trying to sprint
+        else if (!controls.Player.Sprint.IsPressed())
         {
-            isSprinting = false;
-            StartCoroutine(FOVChange(15, -3));
+            // If the player just stopped sprinting
+            if (isSprinting)
+            {
+                isSprinting = false;
+                StartCoroutine(FOVChange(sprintFOVChange, -sprintFOVChange / 5)); // FOV reverts to normal over 0.25 seconds
+            }
+        }
+
+        // Sprint bar refills while not spriting
+        if (!isSprinting)
+        {
+            sprintSlider.value += Time.deltaTime / sprintRecoveryDuration; // Sprint bar takes sprintRecoveryDuration seconds to refill
+
+            // When sprint bar fills to max, the player is no longer exhausted
+            if (sprintSlider.value >= sprintSlider.maxValue)
+            {
+                isExhausted = false;
+            }
+        }
+        // Sprint bar decreases while spriting
+        else
+        {
+            sprintSlider.value -= Time.deltaTime / sprintDuration; // Sprint bar takes sprintDuration seconds to empty
+
+            // When player runs out of sprint
+            if (sprintSlider.value <= sprintSlider.minValue)
+            {
+                isSprinting = false;
+                isExhausted = true;
+                StartCoroutine(FOVChange(sprintFOVChange, -sprintFOVChange / 5)); // FOV reverts to normal over 0.25 seconds
+            }
         }
     }
 
