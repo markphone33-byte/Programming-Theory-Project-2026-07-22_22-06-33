@@ -1,8 +1,6 @@
+using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -11,17 +9,16 @@ public class EnemyHealth : MonoBehaviour
     private TextMeshPro healthText;
     private GameObject playerCamera;
     private EnemyAttack enemyAttackScript;
-    private Transform enemy;
-    [SerializeField] private LayerMask visibilityMask;
+    private LayerMask wallsAndEnemies;
 
     // Initalize Variables
     void Awake()
     {
         currentHealth = maxHealth;
-        healthText = GetComponent<TextMeshPro>();
+        healthText = transform.Find("HealthText").GetComponent<TextMeshPro>();
         healthText.text = currentHealth.ToString();
-        enemyAttackScript = gameObject.GetComponentInParent<EnemyAttack>();
-        enemy = transform.parent;
+        enemyAttackScript = GetComponent<EnemyAttack>();
+        wallsAndEnemies = LayerMask.GetMask("Default", "Enemy");
     }
 
     // Initialize references to other game objects
@@ -33,24 +30,23 @@ public class EnemyHealth : MonoBehaviour
     // Reduces health and dies when at or below 0 health
     public void TakeDamage(float damage)
     {
-        Debug.Log("Enemy Damaged");
         currentHealth -= damage;
         healthText.text = currentHealth.ToString();
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
-            Destroy(enemy.gameObject);
+            Destroy(gameObject);
         }
     }
 
     void Update()
     {
         // Fires a ray from the player to the enemy and stores the information in hit
-        Vector3 direction = enemy.position - playerCamera.transform.position;
+        Vector3 direction = transform.position - playerCamera.transform.position;
         RaycastHit hit;
-        Physics.Raycast(playerCamera.transform.position, direction.normalized, out hit, direction.magnitude, visibilityMask);
+        Physics.Raycast(playerCamera.transform.position, direction.normalized, out hit, direction.magnitude, wallsAndEnemies);
         // If the ray hits an object other than the enemy then make the health text invisible
         Color color = healthText.color;
-        if (hit.transform != enemy)
+        if (hit.transform != transform)
         {
             color.a = 0;
         }
@@ -63,9 +59,11 @@ public class EnemyHealth : MonoBehaviour
         healthText.color = color;
     }
 
-    // Makes the health text always face the player
     void LateUpdate()
     {
-        transform.forward = playerCamera.transform.forward;
+        // Makes the health text always face the player
+        healthText.transform.forward = playerCamera.transform.forward;
     }
+
+
 }

@@ -3,42 +3,64 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private InputSystem_Actions controls;
     [SerializeField] private ParticleSystem slashParticle;
     private GameObject playerCamera;
     private Rigidbody playerRb;
-    public float tempOffset;
-    public float spawnForward;
+    [SerializeField] private float spawnForward = 2.5f;
     private LayerMask enemyLayer;
-    public Vector3 attackHalfExtents;
-    public float spawnMomentum;
+    [SerializeField] private Vector3 attackHalfExtents = new Vector3(2f, 3f, 0.7f);
+    [SerializeField] private float spawnMomentum = 0.1f;
+    [SerializeField] private float damage = 10f;
+   [SerializeField] private float attackCooldown = 0.5f;
+    private float attackAvailableTime;
 
 
+    // Initialize variables
     void Awake()
     {
+        controls = new InputSystem_Actions();
         playerCamera = GameObject.FindWithTag("MainCamera");
         playerRb = GetComponent<Rigidbody>();
         enemyLayer = LayerMask.GetMask("Enemy");
-        attackHalfExtents = new Vector3(1f, 2f, 1f);
     }
+
+    //Enables player input
+    void OnEnable()
+    {
+        controls.Player.Enable();
+    }
+    // Disables player input
+    void OnDisable()
+    {
+        controls.Player.Disable();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (controls.Player.Attack.triggered && Time.time >= attackAvailableTime)
         {
-            Quaternion particleRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + tempOffset, transform.rotation.eulerAngles.y, 0);
+            // Rotated in the direction the player is facing. The added 90 is to correct the rotation to the be the middle of where the camera is facing
+            Quaternion particleRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + 90, transform.rotation.eulerAngles.y, 0);
+            // Spawns in front of the player and a bit extra in front based on how fast the player is moving
             Vector3 particleSpawnPosition = playerCamera.transform.position + playerCamera.transform.forward * spawnForward + playerRb.linearVelocity * spawnMomentum;
+
             Instantiate(slashParticle, particleSpawnPosition, particleRotation);
 
+            // Hits all enemues with a box in front of the player
             Collider[] hits = Physics.OverlapBox(particleSpawnPosition, attackHalfExtents, particleRotation, enemyLayer);
-            Debug.Log(hits.Length);
             foreach (Collider hit in hits)
             {
-                Debug.Log(hit.gameObject.name);
-                hit.transform.Find("HealthText")?.GetComponent<EnemyHealth>()?.TakeDamage(10);
+                hit.transform.GetComponent<EnemyHealth>()?.TakeDamage(damage);
             }
+
+            // Cooldown for attacking
+            attackAvailableTime = Time.time + attackCooldown;
         }
     }
 
+    // Makes a red box in the scene view showing the hitbox of the attack
     private void OnDrawGizmosSelected()
     {
         // Don't try to draw if the camera hasn't been found yet
@@ -46,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Quaternion rotation = Quaternion.Euler(
-            playerCamera.transform.rotation.eulerAngles.x + tempOffset,
+            playerCamera.transform.rotation.eulerAngles.x + 90,
             transform.rotation.eulerAngles.y,
             0);
 

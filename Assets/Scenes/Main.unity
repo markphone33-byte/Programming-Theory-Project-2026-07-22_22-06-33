@@ -2326,9 +2326,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   baseMoveSpeed: 45
   moveSpeedMultiplier: 1
-  sprintBoost: 0.8
-  sprintDuration: 3
-  sprintRecoveryDuration: 6
+  sprintBoost: 0.5
+  sprintDuration: 4
+  sprintRecoveryDuration: 10
 --- !u!114 &253728415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,10 +2370,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   slashParticle: {fileID: 7439923679015341688, guid: 1d28f728311b34e42adcf3c1a21b1013, type: 3}
-  tempOffset: 90
-  spawnForward: 2.5
-  attackHalfExtents: {x: 2, y: 3, z: 0.7}
+  spawnForward: 1.5
+  attackHalfExtents: {x: 2, y: 2, z: 0.7}
   spawnMomentum: 0.1
+  damage: 10
+  attackCooldown: 0.5
 --- !u!1 &263023801
 GameObject:
   m_ObjectHideFlags: 0
@@ -6961,9 +6962,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 100
   currentHealth: 0
-  visibilityMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &821540256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6977,6 +6975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackRange: 5
+  damage: 10
 --- !u!114 &821540257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16170,6 +16169,10 @@ PrefabInstance:
     - target: {fileID: 1167877935087099653, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464519002833478046, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
+      propertyPath: updateInterval
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalPosition.x
