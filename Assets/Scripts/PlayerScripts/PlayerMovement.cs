@@ -29,13 +29,15 @@ public class PlayerMovement : MonoBehaviour
     // Enables player input
     void OnEnable()
     {
-        controls.Player.Enable();
+        controls.Player.Move.Enable();
+        controls.Player.Sprint.Enable();
     }
 
     // Disables player input
     void OnDisable()
     {
-        controls.Player.Disable();
+        controls.Player.Move.Disable();
+        controls.Player.Sprint.Disable();
     }
 
     // Initialize references to other game objects

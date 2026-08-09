@@ -28,12 +28,12 @@ public class PlayerAttack : MonoBehaviour
     //Enables player input
     void OnEnable()
     {
-        controls.Player.Enable();
+        controls.Player.Attack.Enable();
     }
     // Disables player input
     void OnDisable()
     {
-        controls.Player.Disable();
+        controls.Player.Attack.Disable();
     }
 
     // Update is called once per frame

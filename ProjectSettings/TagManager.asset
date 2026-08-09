@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HealthSlider
   - SprintSlider
+  - Collectible
   layers:
   - Default
   - TransparentFX

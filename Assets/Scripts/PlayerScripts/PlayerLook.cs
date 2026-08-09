@@ -20,12 +20,12 @@ public class PlayerLook : MonoBehaviour
 
     void OnEnable()
     {
-        controls.Player.Enable();
+        controls.Player.Look.Enable();
     }
 
     void OnDisable()
     {
-        controls.Player.Disable();
+        controls.Player.Look.Disable();
     }
 
     // Locks cursor, hides cursor, and initializes references to other game objects
