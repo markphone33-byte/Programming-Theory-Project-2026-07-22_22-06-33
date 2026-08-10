@@ -5,16 +5,16 @@ public class Item
 {
     public String name {get; private set;}
     public int amount {get; private set;}
-    public GameObject item {get; private set;}
+    public int prefabIndex {get; private set;}
 
-    public Item(string name, int amount, GameObject item)
+    public Item(string name, int amount, int prefabIndex)
     {
         this.name = name;
         this.amount = amount;
-        this.item = item;
+        this.prefabIndex = prefabIndex;
     }
 
-    public void increaseAmount(int num)
+    public void changeAmount(int num)
     {
         amount += num;
     }

@@ -3,13 +3,13 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     [SerializeField] private string itemName;
-    [SerializeField] private GameObject item;
+    [SerializeField] private int prefabIndex;
 
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            PlayerInventory.Instance.PickUpItem(itemName, item);
+            PlayerInventory.Instance.PickUpItem(itemName, prefabIndex);
             Destroy(gameObject);
         }
     }

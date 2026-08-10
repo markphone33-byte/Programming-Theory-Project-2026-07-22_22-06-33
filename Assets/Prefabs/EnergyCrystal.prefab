@@ -142,4 +142,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectible
   itemName: Energy\nCrystal
-  item: {fileID: 3556681362877643018}
+  prefab: {fileID: 3556681362877643018}

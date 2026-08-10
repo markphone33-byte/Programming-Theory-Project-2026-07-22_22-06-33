@@ -14,16 +14,20 @@ public class PlayerInventory : MonoBehaviour
     private GameObject itemSlotsParent;
     private Color selectSlotColor;
     private Color defaultSlotColor;
+    [SerializeField] private GameObject[] itemPrefabs;
+    private GameObject player;
 
-    // Enabled player input for switching between items
+    // Enabled player input
     void OnEnable()
     {
         controls.Player.ItemSwitch.Enable();
+        controls.Player.DropItem.Enable();
     }
-    // Disables player input for switching between items
+    // Disables player input
     void OnDisable()
     {
         controls.Player.ItemSwitch.Disable();
+        controls.Player.DropItem.Disable();
     }
 
     // Initalizes variables
@@ -39,7 +43,8 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         itemSlotsParent = GameObject.Find("ItemSlots");
-        PickUpItem("Fists", null); // Player starts with fists and can't drop them
+        PickUpItem("Fists", -1); // Player starts with fists and can't drop them
+        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -50,19 +55,23 @@ public class PlayerInventory : MonoBehaviour
         {
             SwitchSelectedItem();
         }
+        else if (controls.Player.DropItem.WasPressedThisFrame())
+        {
+            DropSelectedItem();
+        }
     }
 
     // Called by collectibles when the player picks them up. Adds the item to the player's inventory
-    public void PickUpItem(string name, GameObject item)
+    public void PickUpItem(string name, int prefabIndex)
     {
-        Item newItem = new Item(name, 1, item);
+        Item newItem = new Item(name, 1, prefabIndex);
         // If the same item is already in an item slot then add it to that same slot just by increasing the amount
         for (int i = 0; i < inventory.Count; i++)
         {
             Item itemInInventory = inventory[i];
-            if (itemInInventory.name == name && itemInInventory.item == item)
+            if (itemInInventory.name == name && itemInInventory.prefabIndex == prefabIndex)
             {
-                inventory[i].increaseAmount(1);
+                inventory[i].changeAmount(1);
                 UpdateInventoryUI();
                 return;
             }
@@ -136,5 +145,22 @@ public class PlayerInventory : MonoBehaviour
         }
 
         GetItemSlot(selectedItemSlot).GetComponent<Image>().color = selectSlotColor; // New selected slot takes on the selected color
+    }
+
+    private void DropSelectedItem()
+    {
+        Item selectedItem = inventory[selectedItemSlot];
+        if (selectedItem.prefabIndex != -1)
+        {
+            selectedItem.changeAmount(-1);
+            if (selectedItem.amount <= 0)
+            {
+                inventory.RemoveAt(selectedItemSlot);
+            }
+            SwitchSelectedItem();
+            GameObject droppedItem = itemPrefabs[selectedItem.prefabIndex];
+            Instantiate(droppedItem, player.transform.position + player.transform.forward * 3, droppedItem.transform.rotation);
+            UpdateInventoryUI();
+        }
     }
 }
