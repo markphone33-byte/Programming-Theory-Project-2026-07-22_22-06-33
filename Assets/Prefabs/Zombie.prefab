@@ -121,8 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9175f59f6f64d03ac9d8564cf2495d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  updateInterval: 1
-  moveSpeed: 4
+  updateInterval: 0.5
+  moveSpeed: 3.5
+  continueChaseTime: 4
+  visionDistance: 50
+  wanderDistance: 50
+  chaseSpeedBoost: 1.5
 --- !u!114 &4277101174358249009
 MonoBehaviour:
   m_ObjectHideFlags: 0

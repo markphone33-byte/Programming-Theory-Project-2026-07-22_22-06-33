@@ -43,7 +43,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         itemSlotsParent = GameObject.Find("ItemSlots");
-        PickUpItem("Fists", -1); // Player starts with fists and can't drop them
+        PickUpItem("Fists", 0); // Player starts with fists and can't drop them
         player = GameObject.FindWithTag("Player");
     }
 
@@ -150,7 +150,7 @@ public class PlayerInventory : MonoBehaviour
     private void DropSelectedItem()
     {
         Item selectedItem = inventory[selectedItemSlot];
-        if (selectedItem.prefabIndex != -1)
+        if (selectedItem.prefabIndex != 0)
         {
             selectedItem.changeAmount(-1);
             if (selectedItem.amount <= 0)
@@ -162,5 +162,15 @@ public class PlayerInventory : MonoBehaviour
             Instantiate(droppedItem, player.transform.position + player.transform.forward * 3, droppedItem.transform.rotation);
             UpdateInventoryUI();
         }
+    }
+
+    public GameObject GetSelectedItemPrefab()
+    {
+        return itemPrefabs[GetSelectedItem().prefabIndex];
+    }
+
+    public Item GetSelectedItem()
+    {
+        return inventory[selectedItemSlot];
     }
 }

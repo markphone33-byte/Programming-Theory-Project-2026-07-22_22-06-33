@@ -89,6 +89,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 25e6cb185ddd1441cbd7ec728b4e2caf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8225436487315914446}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 25e6cb185ddd1441cbd7ec728b4e2caf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5789027471334265228}
   m_SourcePrefab: {fileID: 100100000, guid: 25e6cb185ddd1441cbd7ec728b4e2caf, type: 3}
 --- !u!1 &3556681362877643018 stripped
 GameObject:
@@ -142,4 +145,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectible
   itemName: Energy\nCrystal
-  prefab: {fileID: 3556681362877643018}
+  prefabIndex: 1
+--- !u!114 &5789027471334265228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3556681362877643018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eedd59beb2b846c8ba858ea6b10e723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UseEnergyCrystal
