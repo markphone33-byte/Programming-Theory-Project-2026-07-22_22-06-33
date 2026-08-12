@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2099909911901078636}
   - component: {fileID: 5384229739346615233}
   - component: {fileID: 8377963638389172106}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2052241758396098404}
   - component: {fileID: 8341919166393488027}
   - component: {fileID: 1580557484694898294}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 8299399144659666955}
   - component: {fileID: 3639896311776344854}
   - component: {fileID: 182337288500773895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2312663299037265268}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Large_Door_Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

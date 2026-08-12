@@ -109,7 +109,7 @@ public class EnemyMovement : MonoBehaviour
             // Sends a ray from the enemy towards the player to check for any walls inbetween
             RaycastHit hit;
             Vector3 direction = player.position - transform.position;
-            LayerMask wallsAndPlayer = LayerMask.GetMask("Default", "Player");
+            LayerMask wallsAndPlayer = LayerMask.GetMask("Wall", "Player");
             Physics.Raycast(transform.position, direction.normalized, out hit, direction.magnitude, wallsAndPlayer);
 
             if (hit.transform == player) // Player is not behind a wall

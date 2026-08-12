@@ -7098,6 +7098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 100
   currentHealth: 0
+  EnergyCrystal: {fileID: 0}
 --- !u!114 &821540256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16669,7 +16670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -53.75
+      value: 5.12
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16677,7 +16678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.82
+      value: 7.19
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalRotation.w
