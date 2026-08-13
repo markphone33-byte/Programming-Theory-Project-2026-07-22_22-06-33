@@ -2361,7 +2361,7 @@ Transform:
   m_GameObject: {fileID: 253728407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -6.2, y: 1, z: -5.8}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14758,8 +14758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9030aa31a084700bee2391cc928a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  spawnCenter: {x: -120, y: 0, z: -60}
-  spawnRange: 120
   energyCrystal: {fileID: 3556681362877643018, guid: 8287ac257d5244861896a1f39b6484c4, type: 3}
 --- !u!1 &1944934384
 GameObject:
@@ -16570,10 +16568,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
-    - target: {fileID: 1167877935087099653, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.12
@@ -16617,7 +16611,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4979519643236869679, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: b1eb203f48de8439ab98e3ac4738f5f9, type: 3}
 --- !u!1001 &9156128014473331622
 PrefabInstance:
