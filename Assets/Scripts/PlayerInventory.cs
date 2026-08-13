@@ -173,4 +173,16 @@ public class PlayerInventory : MonoBehaviour
     {
         return inventory[selectedItemSlot];
     }
+
+    public GameObject GetItemPrefab(string name)
+    {
+        foreach (GameObject itemPrefab in itemPrefabs)
+        {
+            if (itemPrefab.name.Equals(name))
+            {
+                return itemPrefab;
+            }
+        }
+        return null;
+    }
 }

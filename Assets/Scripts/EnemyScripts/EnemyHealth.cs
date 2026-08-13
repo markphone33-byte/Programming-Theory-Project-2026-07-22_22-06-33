@@ -62,7 +62,7 @@ public class EnemyHealth : MonoBehaviour
         else if (didHit)
         {
             color.a = 1;
-            float playerDistance = enemyAttackScript.DistanceToPlayer();
+            float playerDistance = enemyAttackScript.EnemyDistanceToPlayer();
             color.r = Mathf.Clamp01(0.9f - Mathf.Round(playerDistance / 3) / 10);
             healthText.color = color;
         }

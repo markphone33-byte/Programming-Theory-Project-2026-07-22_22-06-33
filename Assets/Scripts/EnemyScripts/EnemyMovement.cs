@@ -57,7 +57,7 @@ public class EnemyMovement : MonoBehaviour
     {
         // Chases the player with increased speed under certain conditions
 
-        if (enemyAttackScript.DistanceToPlayer() < visionDistance) // Player is within 50 units
+        if (enemyAttackScript.EnemyDistanceToPlayer() < visionDistance) // Player is within 50 units
         {
             NavMeshPath pathToPlayer = new NavMeshPath();
             NavMesh.CalculatePath(transform.position, player.position, navMeshFilter, pathToPlayer);

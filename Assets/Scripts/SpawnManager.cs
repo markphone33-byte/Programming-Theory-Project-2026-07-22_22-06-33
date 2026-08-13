@@ -7,19 +7,18 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float spawnRangeX;
     [SerializeField] private float spawnRangeZ;
     private GameObject player;
-    [SerializeField] private GameObject energyCrystal;
-    public int startingCount;
     private float minDistanceFromPlayer;
+    public static SpawnManager Instance { get; private set; }
 
     void Awake()
     {
         minDistanceFromPlayer = 20;
+        Instance = this;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        SpawnObject(energyCrystal, startingCount);
     }
 
     // Update is called once per frame
@@ -28,7 +27,7 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    public void SpawnObject(GameObject obj, int count)
+    public void SpawnObject(GameObject obj, int count, GameObject parent)
     {
         int i = 0;
         int attempts = 0;
@@ -55,7 +54,7 @@ public class SpawnManager : MonoBehaviour
                     NavMesh.CalculatePath(player.transform.position, spawnPos, filter, path);
                     if (path.status == NavMeshPathStatus.PathComplete)
                     {
-                        Instantiate(obj, spawnPos, obj.transform.rotation);
+                        Instantiate(obj, spawnPos, obj.transform.rotation, parent.transform);
                         i++;
                     }
                 }
