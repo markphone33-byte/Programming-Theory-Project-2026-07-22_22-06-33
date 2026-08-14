@@ -1,16 +1,22 @@
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance {get; private set;}
     public int level {get; private set;}
     [SerializeField] private GameObject[] enemyPrefabs;
     private GameObject enemyParent;
     private GameObject itemParent;
     private GameObject player;
     private bool gameStart = true;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI crystalsNeededText;
+    public int crystalsNeeded {get; private set;}
 
     void Awake()
     {
+        Instance = this;
         level = 1;
     }
 
@@ -36,6 +42,9 @@ public class LevelManager : MonoBehaviour
     {
         int enemiesToSpawn = 3 + level * 2;
         int crystalsToSpawn = 7 + level * 2;
+        crystalsNeeded = 3 + 2 * level;
+        levelText.text = "Level: " + level;
+        crystalsNeededText.text = "Crystals Needed: " + crystalsNeeded;
 
         SpawnManager.Instance.SpawnObject(enemyPrefabs[0], enemiesToSpawn, enemyParent);
         GameObject energyCrystal = ItemManager.Instance.GetItemPrefab("EnergyCrystal");
@@ -70,6 +79,6 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        player.transform.position = Vector3.zero;
+        player.transform.position = Vector3.up;
     }
 }

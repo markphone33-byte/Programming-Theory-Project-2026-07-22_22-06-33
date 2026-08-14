@@ -38,4 +38,9 @@ public class ItemManager : MonoBehaviour
         Debug.Log("Item could not be found at index " + index + " in ItemPrefabs");
         return null;
     }
+
+    public int GetEnergyCrystalIndex()
+    {
+        return 1;
+    }
 }
