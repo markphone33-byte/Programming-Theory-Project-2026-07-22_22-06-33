@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   updateInterval: 0.5
-  moveSpeed: 3.5
+  moveSpeed: 3.3
   continueChaseTime: 4
   visionDistance: 50
   wanderDistance: 50
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   attackRange: 2
-  damage: 15
+  damage: 20
 --- !u!114 &5829094279945111857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,8 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ececd24a52b4d4d1785f12bdf96facab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
+  EnergyCrystal: {fileID: 3556681362877643018, guid: 8287ac257d5244861896a1f39b6484c4, type: 3}
 --- !u!1 &4443724463975062447
 GameObject:
   m_ObjectHideFlags: 0

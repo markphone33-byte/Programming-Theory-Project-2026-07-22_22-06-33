@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,6 @@ public class PlayerInventory : MonoBehaviour
     private GameObject itemSlotsParent;
     private Color selectSlotColor;
     private Color defaultSlotColor;
-    [SerializeField] private GameObject[] itemPrefabs;
     private GameObject player;
 
     // Enabled player input
@@ -53,7 +53,7 @@ public class PlayerInventory : MonoBehaviour
         // When the player presses "K" or "L" they swtich between their item slots
         if (controls.Player.ItemSwitch.WasPressedThisFrame())
         {
-            SwitchSelectedItem();
+            PlayerSwitchSelectedItem();
         }
         else if (controls.Player.DropItem.WasPressedThisFrame())
         {
@@ -127,7 +127,7 @@ public class PlayerInventory : MonoBehaviour
         return null; // If there are no item slots or if the provided slot number does not exist then return null
     }
 
-    private void SwitchSelectedItem()
+    private void PlayerSwitchSelectedItem()
     {
         GetItemSlot(selectedItemSlot).GetComponent<Image>().color = defaultSlotColor; // Current selected slot returns to normal color
         // The +1 is needed since the inventory list starts indexing at 0 but item slots are numbered 1, 2, 3, etc...
@@ -147,30 +147,69 @@ public class PlayerInventory : MonoBehaviour
         GetItemSlot(selectedItemSlot).GetComponent<Image>().color = selectSlotColor; // New selected slot takes on the selected color
     }
 
+    private void SwitchSelectedItem(int change)
+    {
+        selectedItemSlot += change;
+
+        // Item slots cycle back around so +1 on the last item goes back to the first and -1 on the first goes to the last
+        if (selectedItemSlot >= inventory.Count)
+        {
+            selectedItemSlot = 0;
+        }
+        else if (selectedItemSlot < 0)
+        {
+            selectedItemSlot = inventory.Count - 1;
+        }
+    }
+
     private void DropSelectedItem()
     {
-        Item selectedItem = inventory[selectedItemSlot];
+        Item selectedItem = GetSelectedItem();
         if (selectedItem.prefabIndex != 0)
         {
+            GameObject itemToDrop = GetSelectedItemPrefab();
+            Instantiate(itemToDrop, player.transform.position + player.transform.forward * 3, itemToDrop.transform.rotation);
             selectedItem.changeAmount(-1);
             if (selectedItem.amount <= 0)
             {
                 inventory.RemoveAt(selectedItemSlot);
+                SwitchSelectedItem(-1);
             }
-            SwitchSelectedItem();
-            GameObject droppedItem = itemPrefabs[selectedItem.prefabIndex];
-            Instantiate(droppedItem, player.transform.position + player.transform.forward * 3, droppedItem.transform.rotation);
             UpdateInventoryUI();
         }
     }
 
     public GameObject GetSelectedItemPrefab()
     {
-        return itemPrefabs[GetSelectedItem().prefabIndex];
+        return ItemManager.Instance.GetItemPrefab(GetSelectedItem().prefabIndex);
     }
 
     public Item GetSelectedItem()
     {
         return inventory[selectedItemSlot];
+    }
+
+    public bool RemoveItem(int prefabIndex, int removeAmount)
+    {
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            Item item = inventory[i];
+            if (item.prefabIndex == prefabIndex && item.amount >= removeAmount)
+            {
+                item.changeAmount(-removeAmount);
+                if (item.amount <= 0)
+                {
+                    int inventoryIndex = inventory.IndexOf(item);
+                    inventory.Remove(item);
+                    if (selectedItemSlot == inventoryIndex)
+                    {
+                        SwitchSelectedItem(-1);
+                    }
+                }
+                UpdateInventoryUI();
+                return true;
+            }
+        }
+        return false;
     }
 }

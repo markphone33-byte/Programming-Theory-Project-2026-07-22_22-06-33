@@ -26,7 +26,7 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DistanceToPlayer() < attackRange && !isStunned)
+        if (EnemyDistanceToPlayer() < attackRange && !isStunned)
         {
             Attack();
         }
@@ -41,7 +41,7 @@ public class EnemyAttack : MonoBehaviour
     }
 
     // Gets the x and z distance between the enemy and the player ignoring height differences
-    public float DistanceToPlayer()
+    public float EnemyDistanceToPlayer()
     {
         float deltaX = Mathf.Pow(player.position.x - transform.position.x, 2);
         float deltaZ = Mathf.Pow(player.position.z - transform.position.z, 2);

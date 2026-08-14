@@ -57,7 +57,7 @@ public class EnemyMovement : MonoBehaviour
     {
         // Chases the player with increased speed under certain conditions
 
-        if (enemyAttackScript.DistanceToPlayer() < visionDistance) // Player is within 50 units
+        if (enemyAttackScript.EnemyDistanceToPlayer() < visionDistance) // Player is within 50 units
         {
             NavMeshPath pathToPlayer = new NavMeshPath();
             NavMesh.CalculatePath(transform.position, player.position, navMeshFilter, pathToPlayer);
@@ -109,7 +109,7 @@ public class EnemyMovement : MonoBehaviour
             // Sends a ray from the enemy towards the player to check for any walls inbetween
             RaycastHit hit;
             Vector3 direction = player.position - transform.position;
-            LayerMask wallsAndPlayer = LayerMask.GetMask("Default", "Player");
+            LayerMask wallsAndPlayer = LayerMask.GetMask("Wall", "Player");
             Physics.Raycast(transform.position, direction.normalized, out hit, direction.magnitude, wallsAndPlayer);
 
             if (hit.transform == player) // Player is not behind a wall

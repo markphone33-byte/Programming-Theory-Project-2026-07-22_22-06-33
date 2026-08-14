@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // Sprint bar decreases while spriting
-        else
+        else if (isSprinting)
         {
             sprintSlider.value -= Time.deltaTime / sprintDuration; // Sprint bar takes sprintDuration seconds to empty
 

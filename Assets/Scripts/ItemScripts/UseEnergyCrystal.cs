@@ -4,13 +4,14 @@ public class UseEnergyCrystal : UseItem
 {
     public override void Use()
     {
-        if(PlayerInventory.Instance.GetSelectedItem().amount >= 3)
+        if(PlayerInventory.Instance.RemoveItem(ItemManager.Instance.GetEnergyCrystalIndex(), LevelManager.Instance.crystalsNeeded))
         {
-            Debug.Log("5 Crystals!");
+            Debug.Log("Next Level");
+            LevelManager.Instance.NextLevel();
         }
         else
         {
-            Debug.Log("Not Enough");
+            Debug.Log("Not Enough, Get: " + LevelManager.Instance.crystalsNeeded);
         }
     }
 }
