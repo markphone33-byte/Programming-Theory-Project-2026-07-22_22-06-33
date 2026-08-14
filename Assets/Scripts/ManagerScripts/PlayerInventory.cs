@@ -14,7 +14,6 @@ public class PlayerInventory : MonoBehaviour
     private GameObject itemSlotsParent;
     private Color selectSlotColor;
     private Color defaultSlotColor;
-    [SerializeField] private GameObject[] itemPrefabs;
     private GameObject player;
 
     // Enabled player input
@@ -149,24 +148,28 @@ public class PlayerInventory : MonoBehaviour
 
     private void DropSelectedItem()
     {
-        Item selectedItem = inventory[selectedItemSlot];
+        Item selectedItem = GetSelectedItem();
         if (selectedItem.prefabIndex != 0)
         {
+            GameObject itemToDrop = GetSelectedItemPrefab();
+            Instantiate(itemToDrop, player.transform.position + player.transform.forward * 3, itemToDrop.transform.rotation);
             selectedItem.changeAmount(-1);
             if (selectedItem.amount <= 0)
             {
                 inventory.RemoveAt(selectedItemSlot);
+                selectedItemSlot--;
+                if (selectedItemSlot < 0)
+                {
+                    selectedItemSlot = inventory.Count - 1;
+                }
             }
-            SwitchSelectedItem();
-            GameObject droppedItem = itemPrefabs[selectedItem.prefabIndex];
-            Instantiate(droppedItem, player.transform.position + player.transform.forward * 3, droppedItem.transform.rotation);
             UpdateInventoryUI();
         }
     }
 
     public GameObject GetSelectedItemPrefab()
     {
-        return itemPrefabs[GetSelectedItem().prefabIndex];
+        return ItemManager.Instance.GetItemPrefab(GetSelectedItem().prefabIndex);
     }
 
     public Item GetSelectedItem()
@@ -174,15 +177,4 @@ public class PlayerInventory : MonoBehaviour
         return inventory[selectedItemSlot];
     }
 
-    public GameObject GetItemPrefab(string name)
-    {
-        foreach (GameObject itemPrefab in itemPrefabs)
-        {
-            if (itemPrefab.name.Equals(name))
-            {
-                return itemPrefab;
-            }
-        }
-        return null;
-    }
 }

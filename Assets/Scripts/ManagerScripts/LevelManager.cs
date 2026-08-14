@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
         int crystalsToSpawn = 7 + level * 2;
 
         SpawnManager.Instance.SpawnObject(enemyPrefabs[0], enemiesToSpawn, enemyParent);
-        GameObject energyCrystal = PlayerInventory.Instance.GetItemPrefab("EnergyCrystal");
+        GameObject energyCrystal = ItemManager.Instance.GetItemPrefab("EnergyCrystal");
         if (energyCrystal != null)
         {
             SpawnManager.Instance.SpawnObject(energyCrystal, crystalsToSpawn, itemParent);
