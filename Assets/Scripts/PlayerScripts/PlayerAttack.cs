@@ -3,17 +3,22 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private ParticleSystem slashParticle;
-    private GameObject player;
+    [SerializeField] private AudioClip fistsAttackSound;
+    [SerializeField] private AudioClip fistsHitSound;
+    private AudioSource playerAudio;
     private GameObject playerCamera;
     private Rigidbody playerRb;
     private LayerMask enemyLayer;
 
+    void Awake()
+    {
+        playerRb = GetComponent<Rigidbody>();
+        playerAudio = GetComponent<AudioSource>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
         playerCamera = GameObject.FindWithTag("MainCamera");
-        playerRb = player.GetComponent<Rigidbody>();
         enemyLayer = LayerMask.GetMask("Enemy");
     }
 
@@ -53,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
         float spawnForwardMomentum = 0.1f;
 
         // Rotated in the direction the player is facing. The added 90 is to correct the rotation to the be the middle of where the camera is facing
-        Quaternion attackRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + 90, player.transform.rotation.eulerAngles.y, 0);
+        Quaternion attackRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + 90, transform.rotation.eulerAngles.y, 0);
         // Spawns in front of the player and a bit extra in front based on how fast the player is moving
         Vector3 attackSpawnPosition = playerCamera.transform.position + playerCamera.transform.forward * spawnForward + playerRb.linearVelocity * spawnForwardMomentum;
 
@@ -73,7 +78,7 @@ public class PlayerAttack : MonoBehaviour
         float spawnForwardMomentum = 0.1f;
 
         // Rotated in the direction the player is facing. The added 90 is to correct the rotation to the be the middle of where the camera is facing
-        Quaternion attackRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + 90, player.transform.rotation.eulerAngles.y, 0);
+        Quaternion attackRotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x + 90, transform.rotation.eulerAngles.y, 0);
         // Spawns in front of the player and a bit extra in front based on how fast the player is moving
         Vector3 attackSpawnPosition = playerCamera.transform.position + playerCamera.transform.forward * spawnForward + playerRb.linearVelocity * spawnForwardMomentum;
 
@@ -81,7 +86,13 @@ public class PlayerAttack : MonoBehaviour
         Collider[] hits = Physics.OverlapBox(attackSpawnPosition, attackSize, attackRotation, enemyLayer);
         foreach (Collider hit in hits)
         {
-            hit.transform.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+            if (hit.transform.TryGetComponent(out EnemyHealth health))
+            {
+                health.TakeDamage(damage);
+                playerAudio.PlayOneShot(fistsHitSound);
+                return;
+            }
         }
+        playerAudio.PlayOneShot(fistsAttackSound);
     }
 }
