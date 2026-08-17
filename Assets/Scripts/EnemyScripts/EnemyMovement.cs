@@ -17,6 +17,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float wanderDistance = 50;
     [SerializeField] private float chaseSpeedBoost = 1.3f;
     private NavMeshQueryFilter navMeshFilter;
+    private EnemyAnimation enemyAnimation;
 
 
     // Initializes variables
@@ -25,9 +26,12 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         nextUpdateTime = Time.time;
         enemyAttackScript = GetComponent<EnemyAttack>();
-        navMeshFilter = new NavMeshQueryFilter();
-        navMeshFilter.agentTypeID = agent.agentTypeID;
-        navMeshFilter.areaMask = agent.areaMask;
+        navMeshFilter = new NavMeshQueryFilter
+        {
+            agentTypeID = agent.agentTypeID,
+            areaMask = agent.areaMask
+        };
+        enemyAnimation = GetComponent<EnemyAnimation>();
     }
     // Initializes refereences to other game objects
     void Start()
@@ -50,6 +54,7 @@ public class EnemyMovement : MonoBehaviour
         {
             nextUpdateTime = Time.time + updateInterval;
             Movement();
+            enemyAnimation.AnimateMovement(agent.speed, chaseTime > 0);
         }
     }
 
@@ -78,10 +83,6 @@ public class EnemyMovement : MonoBehaviour
                     agent.speed = moveSpeed / chaseSpeedBoost;
                     return; // Stops script here so enemy chases rather than wanders
                 }
-            }
-            else
-            {
-                Debug.Log(pathToPlayer.status);
             }
         }
         Wander(); //If not in chase then wanders around the map at normal speed

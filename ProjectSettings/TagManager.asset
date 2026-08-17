@@ -6,7 +6,6 @@ TagManager:
   tags:
   - HealthSlider
   - SprintSlider
-  - Collectible
   - ItemParent
   - EnemyParent
   layers:

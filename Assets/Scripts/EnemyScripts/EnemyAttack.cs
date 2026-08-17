@@ -9,13 +9,14 @@ public class EnemyAttack : MonoBehaviour
     public bool isStunned {get; private set; } = false;
     [SerializeField] private float attackRange = 3f;
     [SerializeField] private float damage = 10f;
-    private float stunDuration;
+    [SerializeField] private float stunDuration;
+    private EnemyAnimation enemyAnimation;
 
     // Initializes variables
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        stunDuration = 1f;
+        enemyAnimation = GetComponent<EnemyAnimation>();
     }
     // Initializes refereences to other game objects
     void Start()
@@ -29,6 +30,7 @@ public class EnemyAttack : MonoBehaviour
         if (EnemyDistanceToPlayer() < attackRange && !isStunned)
         {
             Attack();
+            enemyAnimation.AnimateAttack();
         }
     }
 
