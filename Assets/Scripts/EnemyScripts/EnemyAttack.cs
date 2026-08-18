@@ -6,7 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
     private Transform player;
     private NavMeshAgent agent;
-    public bool isStunned {get; private set; } = false;
+    public bool isStunned { get; private set; } = false;
     [SerializeField] private float attackRange = 3f;
     [SerializeField] private float damage = 10f;
     [SerializeField] private float stunDuration;
@@ -30,7 +30,6 @@ public class EnemyAttack : MonoBehaviour
         if (EnemyDistanceToPlayer() < attackRange && !isStunned)
         {
             Attack();
-            enemyAnimation.AnimateAttack();
         }
     }
 
@@ -40,6 +39,7 @@ public class EnemyAttack : MonoBehaviour
 
         // Enemy is stunned for 1 second after hitting the player
         StartCoroutine(Stun(stunDuration));
+        enemyAnimation.AnimateAttack();
     }
 
     // Gets the x and z distance between the enemy and the player ignoring height differences

@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void BasicMeleeAttackParticle(float attackSizeY, float particleSpeed, float particleLifetime, float particleSizeXMultiplier, float particleSizeYMultiplier, float particleSizeZMultiplier)
     {
-        float spawnForward = attackSizeY - 0.2f;
+        float spawnForward = attackSizeY - 0.3f;
         float spawnForwardMomentum = 0.1f;
 
         // Rotated in the direction the player is facing. The added 90 is to correct the rotation to the be the middle of where the camera is facing
@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void BasicMeleeAttackCollision(float damage, Vector3 attackSize)
     {
-        float spawnForward = attackSize.y - 0.2f;
+        float spawnForward = attackSize.y - 0.3f;
         float spawnForwardMomentum = 0.1f;
 
         // Rotated in the direction the player is facing. The added 90 is to correct the rotation to the be the middle of where the camera is facing

@@ -127,4 +127,18 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(delay);
         canRetarget = true;
     }
+
+    public void GoToPosition(Vector3 position)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(position, out hit, 5, navMeshFilter))
+        {
+            NavMeshPath path = new NavMeshPath();
+            if (NavMesh.CalculatePath(transform.position, hit.position, navMeshFilter, path))
+            {
+                agent.SetDestination(hit.position);
+                nextUpdateTime = Time.time + updateInterval;
+            }
+        }
+    }
 }

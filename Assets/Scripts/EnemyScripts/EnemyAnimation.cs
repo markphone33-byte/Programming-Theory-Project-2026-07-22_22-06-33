@@ -3,10 +3,12 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator animator;
+    private EnemyAttack enemyAttackScript;
 
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        enemyAttackScript = GetComponent<EnemyAttack>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +20,7 @@ public class EnemyAnimation : MonoBehaviour
     {
         animator.SetFloat("Speed", speed / 3);
         // If idle and just started moving then set IsIdle to false
-        if (speed > 0 && animator.GetBool("IsIdle"))
+        if (speed > 0 && animator.GetBool("IsIdle") && !enemyAttackScript.isStunned)
         {
             animator.SetBool("IsIdle", false);
         }
