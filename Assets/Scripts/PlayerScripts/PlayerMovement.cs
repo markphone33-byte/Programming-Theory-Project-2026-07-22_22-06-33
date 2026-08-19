@@ -15,15 +15,17 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting = false;
     private bool isExhausted = false;
     private Slider sprintSlider;
-    private float sprintFOVChange = 15;
+    [SerializeField] private float sprintFOVChange = 15;
     [SerializeField] private float sprintDuration = 3;
     [SerializeField] private float sprintRecoveryDuration = 3;
+    private PlayerAudio playerAudioScript;
 
     // Initialize variables
     void Awake()
     {
         controls = new InputSystem_Actions();
         playerRb = GetComponent<Rigidbody>();
+        playerAudioScript = GetComponent<PlayerAudio>();
     }
 
     // Enables player input
@@ -72,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
         // Moves the player
         playerRb.AddForce(transform.forward * Time.fixedDeltaTime * moveInput.y * totalMoveSpeed, ForceMode.Impulse);
         playerRb.AddForce(transform.right * Time.fixedDeltaTime * moveInput.x * totalMoveSpeed, ForceMode.Impulse);
+
+        if (playerRb.linearVelocity.magnitude > 3)
+        {
+            playerAudioScript.PlayFootstepSound(moveSpeedMultiplier - 1);
+        }
 
         moveSpeedMultiplier = 1; // Resets the move speed multiplier
     }

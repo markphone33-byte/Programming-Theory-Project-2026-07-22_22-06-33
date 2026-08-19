@@ -2083,6 +2083,7 @@ GameObject:
   - component: {fileID: 253728418}
   - component: {fileID: 253728419}
   - component: {fileID: 253728420}
+  - component: {fileID: 253728421}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -2228,6 +2229,7 @@ MonoBehaviour:
   baseMoveSpeed: 45
   moveSpeedMultiplier: 1
   sprintBoost: 0.5
+  sprintFOVChange: 15
   sprintDuration: 4
   sprintRecoveryDuration: 10
 --- !u!114 &253728415
@@ -2278,7 +2280,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253728407}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a93f4218986a49448c809ee15cb1086, type: 3}
   m_Name: 
@@ -2306,8 +2308,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   slashParticle: {fileID: 7439923679015341688, guid: 1d28f728311b34e42adcf3c1a21b1013, type: 3}
-  fistsAttackSound: {fileID: 8300000, guid: 2637b25a6fd5d4096acadc942b8d42cd, type: 3}
-  fistsHitSound: {fileID: 8300000, guid: feddf4137917244439ab0f3171a0a944, type: 3}
 --- !u!82 &253728420
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2330,9 +2330,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2405,6 +2405,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &253728421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253728407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac36f3823c114bcf956bf0927421193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudio
+  fistsAttackSound: {fileID: 8300000, guid: 2637b25a6fd5d4096acadc942b8d42cd, type: 3}
+  fistsHitSound: {fileID: 8300000, guid: feddf4137917244439ab0f3171a0a944, type: 3}
+  fistsSoundVolume: 0.1
+  footstepClips:
+  - {fileID: 8300000, guid: 5df4825382d7b45b08edd05469006c82, type: 3}
+  - {fileID: 8300000, guid: 752d0978cce854a7ab973365cf9364b6, type: 3}
+  - {fileID: 8300000, guid: b545679313a2c49b99390cb91c4e26bd, type: 3}
+  baseFootstepSoundCooldown: 0.5
+  footstepAveragePitch: 0.8
+  footstepPitchRange: 0.2
+  footstepBaseVolume: 0.15
 --- !u!1 &263023801
 GameObject:
   m_ObjectHideFlags: 0
@@ -16102,93 +16125,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: footstepClips.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: 'footstepClips.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 01afe176731614fe9b57606c891bc6af, type: 3}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: 'footstepClips.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 18685d2ddf70b4ae99a8bcaac4ce6f17, type: 3}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: 'footstepClips.Array.data[2]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 668ea2291081f4ad7897ff105363e702, type: 3}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: 'footstepClips.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 17074fd60ad66459eb00c781c4411568, type: 3}
-    - target: {fileID: 5507661082894987661, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: 'footstepClips.Array.data[4]'
-      value: 
-      objectReference: {fileID: 8300000, guid: eba7fcff667d74fb189a9ee744c19067, type: 3}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: m_Volume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: MaxDistance
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
-      value: 0.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].time
-      value: 0.42249998
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].value
-      value: 0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].value
-      value: 0.006286621
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].inSlope
-      value: -2.119997
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].outSlope
-      value: -2.119997
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].inWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].outWeight
-      value: 0.18353623
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367960893342382303, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].outWeight
-      value: 0.33333334
+    - target: {fileID: 1167877935087099653, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011050991132149629, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16233,10 +16172,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 307644103987697369, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44d6bf09c1aa5422482c4cb8d031db59, type: 3}
 --- !u!1001 &5549550716721346643
 PrefabInstance:

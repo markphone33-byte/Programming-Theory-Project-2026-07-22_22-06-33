@@ -3,9 +3,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private ParticleSystem slashParticle;
-    [SerializeField] private AudioClip fistsAttackSound;
-    [SerializeField] private AudioClip fistsHitSound;
-    private AudioSource playerAudio;
+    private PlayerAudio playerAudioScript;
     private GameObject playerCamera;
     private Rigidbody playerRb;
     private LayerMask enemyLayer;
@@ -13,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
-        playerAudio = GetComponent<AudioSource>();
+        playerAudioScript = GetComponent<PlayerAudio>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -89,10 +87,10 @@ public class PlayerAttack : MonoBehaviour
             if (hit.transform.TryGetComponent(out EnemyHealth health))
             {
                 health.TakeDamage(damage);
-                playerAudio.PlayOneShot(fistsHitSound);
+                playerAudioScript.PlayFistsSound(true);
                 return;
             }
         }
-        playerAudio.PlayOneShot(fistsAttackSound);
+        playerAudioScript.PlayFistsSound(false);
     }
 }

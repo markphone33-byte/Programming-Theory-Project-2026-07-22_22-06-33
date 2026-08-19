@@ -389,29 +389,38 @@ AudioSource:
     - serializedVersion: 3
       time: 0.125
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.013062324
+      outSlope: -0.013062324
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.42249998
-      value: 0.69
-      inSlope: -2.119997
-      outSlope: -2.119997
+      time: 0.332023
+      value: 0.7534537
+      inSlope: -3.1746564
+      outSlope: -3.1746564
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.18353623
+      inWeight: 0.35017076
+      outWeight: 0.10268567
+    - serializedVersion: 3
+      time: 0.46335036
+      value: 0.27742314
+      inSlope: -1.5674218
+      outSlope: -1.5674218
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.47303918
+      outWeight: 0.33453152
     - serializedVersion: 3
       time: 1
       value: 0.006286621
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.81043565
+      outSlope: -0.81043565
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.3099442
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -481,7 +490,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eba7fcff667d74fb189a9ee744c19067, type: 3}
   averagePitch: 1
   pitchRange: 0.2
-  volume: 0.2
+  volume: 0.4
 --- !u!1001 &5908564793996660606
 PrefabInstance:
   m_ObjectHideFlags: 0
