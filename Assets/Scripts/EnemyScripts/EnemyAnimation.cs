@@ -18,7 +18,7 @@ public class EnemyAnimation : MonoBehaviour
 
     public void AnimateMovement(float speed, bool inChase)
     {
-        animator.SetFloat("Speed", speed / 3);
+        animator.SetFloat("Speed", speed / 5);
         // If idle and just started moving then set IsIdle to false
         if (speed > 0 && animator.GetBool("IsIdle") && !enemyAttackScript.isStunned)
         {

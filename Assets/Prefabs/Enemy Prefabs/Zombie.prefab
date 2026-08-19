@@ -197,6 +197,8 @@ GameObject:
   - component: {fileID: 4277101174358249009}
   - component: {fileID: 5829094279945111857}
   - component: {fileID: 5216121732141062791}
+  - component: {fileID: 7367960893342382303}
+  - component: {fileID: 5507661082894987661}
   m_Layer: 6
   m_Name: Zombie
   m_TagString: Untagged
@@ -353,6 +355,133 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af9f54836ca6455ca4bf70858abc1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimation
+--- !u!82 &7367960893342382303
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167877935087099653}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 25
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.125
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.42249998
+      value: 0.69
+      inSlope: -2.119997
+      outSlope: -2.119997
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.18353623
+    - serializedVersion: 3
+      time: 1
+      value: 0.006286621
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5507661082894987661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167877935087099653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cf99ff80589492795dcf01a5661d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAudio
+  footstepClips:
+  - {fileID: 8300000, guid: 01afe176731614fe9b57606c891bc6af, type: 3}
+  - {fileID: 8300000, guid: 18685d2ddf70b4ae99a8bcaac4ce6f17, type: 3}
+  - {fileID: 8300000, guid: 668ea2291081f4ad7897ff105363e702, type: 3}
+  - {fileID: 8300000, guid: 17074fd60ad66459eb00c781c4411568, type: 3}
+  - {fileID: 8300000, guid: eba7fcff667d74fb189a9ee744c19067, type: 3}
+  averagePitch: 1
+  pitchRange: 0.2
+  volume: 0.2
 --- !u!1001 &5908564793996660606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -504,6 +633,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b222157ca29f4992b2a76d5439cf31a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1021117001332344130}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b222157ca29f4992b2a76d5439cf31a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3109392429078271708}
   m_SourcePrefab: {fileID: 100100000, guid: 4b222157ca29f4992b2a76d5439cf31a, type: 3}
 --- !u!4 &6230106787810486421 stripped
 Transform:
@@ -537,3 +669,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3109392429078271708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6718835946017649199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc570a7b8596439aa6ce8650e78afc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAudioRelay
