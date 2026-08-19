@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     private TextMeshPro healthText;
     private GameObject playerCamera;
     private EnemyAttack enemyAttackScript;
+    private EnemyAudio enemyAudioScript;
     private LayerMask wallsAndEnemies;
     [SerializeField] private GameObject EnergyCrystal;
     private Renderer[] renderers;
@@ -25,6 +26,7 @@ public class EnemyHealth : MonoBehaviour
         healthText = transform.Find("HealthText").GetComponent<TextMeshPro>();
         healthText.text = currentHealth.ToString();
         enemyAttackScript = GetComponent<EnemyAttack>();
+        enemyAudioScript = GetComponent<EnemyAudio>();
         enemyMovementScript = GetComponent<EnemyMovement>();
         wallsAndEnemies = LayerMask.GetMask("Wall", "Enemy");
         renderers = enemyModel.GetComponentsInChildren<Renderer>();
@@ -46,6 +48,9 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         healthText.text = currentHealth.ToString();
+
+        enemyAudioScript.PlayGruntSoud();
+        
         enemyMovementScript.GoToPosition(playerCamera.transform.position);
 
         if (tookDamageFlash != null)
