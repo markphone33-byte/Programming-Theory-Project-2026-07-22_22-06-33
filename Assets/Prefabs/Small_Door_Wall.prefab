@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 4877215347655229040}
   - component: {fileID: 4861635472421942396}
   m_Layer: 13
-  m_Name: Cube (3)
+  m_Name: MiniMapIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -546,7 +546,7 @@ Transform:
   m_GameObject: {fileID: 5585161724318221909}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -9.499999, y: 8.499997, z: -10.500021}
+  m_LocalPosition: {x: -9.499999, y: 21.5, z: -10.500021}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

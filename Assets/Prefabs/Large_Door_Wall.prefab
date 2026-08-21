@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 7046671192064612402}
   - component: {fileID: 6300284974936742058}
   m_Layer: 13
-  m_Name: DoorIndicator
+  m_Name: MiniMapIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,7 @@ Transform:
   m_GameObject: {fileID: 1955762433679484867}
   serializedVersion: 2
   m_LocalRotation: {x: -0.49999887, y: -0.5000011, z: 0.49999973, w: -0.50000024}
-  m_LocalPosition: {x: 0, y: 0.571429, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.14285716}
   m_ConstrainProportionsScale: 0
   m_Children: []

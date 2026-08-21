@@ -9,6 +9,7 @@ TagManager:
   - ItemParent
   - EnemyParent
   - MiniMapCamera
+  - PlayerMapIndicator
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - PlayerMovement
   - Floor
   - Roof
-  - DoorIndicator
-  - 
+  - MiniMapIndicator
+  - MiniMapFogOfWar
   - 
   - 
   - 
