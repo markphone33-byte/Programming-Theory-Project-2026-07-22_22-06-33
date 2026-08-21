@@ -8,6 +8,7 @@ TagManager:
   - SprintSlider
   - ItemParent
   - EnemyParent
+  - MiniMapCamera
   layers:
   - Default
   - TransparentFX
@@ -20,9 +21,9 @@ TagManager:
   - Wall
   - DoorFrame
   - PlayerMovement
-  - 
-  - 
-  - 
+  - Floor
+  - Roof
+  - DoorIndicator
   - 
   - 
   - 
