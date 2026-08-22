@@ -18,7 +18,6 @@ public class PlayerHealth : MonoBehaviour
     {
         healthSlider = GameObject.FindWithTag("HealthSlider").GetComponent<Slider>();
         healthSlider.value = currentHealth / maxHealth;
-        StartCoroutine(PassiveHealing());
     }
 
     public void TakeDamage(float damage)
@@ -49,14 +48,5 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
         healthSlider.value = currentHealth / maxHealth;
-    }
-
-    public IEnumerator PassiveHealing()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(2);
-            Heal(1);
-        }
     }
 }

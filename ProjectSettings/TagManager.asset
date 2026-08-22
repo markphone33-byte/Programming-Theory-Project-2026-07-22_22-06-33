@@ -6,9 +6,10 @@ TagManager:
   tags:
   - HealthSlider
   - SprintSlider
-  - Collectible
   - ItemParent
   - EnemyParent
+  - MiniMapCamera
+  - PlayerMapIndicator
   layers:
   - Default
   - TransparentFX
@@ -19,12 +20,12 @@ TagManager:
   - Enemy
   - Player
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - DoorFrame
+  - PlayerMovement
+  - Floor
+  - Roof
+  - MiniMapIndicator
+  - MiniMapFogOfWar
   - 
   - 
   - 

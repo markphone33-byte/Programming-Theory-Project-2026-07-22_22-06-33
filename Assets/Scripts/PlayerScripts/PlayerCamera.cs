@@ -4,11 +4,11 @@ public class PlayerCamera : MonoBehaviour
 {
     private GameObject player;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private float tempValue;
+    [SerializeField] private float forwardOffsetMultiplier;
 
     void Awake()
     {
-        offset = new Vector3(0, 1f, 0);
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,9 +18,9 @@ public class PlayerCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = player.transform.position + transform.forward * tempValue + offset;
+        transform.position = player.transform.position + offset + transform.forward * forwardOffsetMultiplier;
     }
-    
+
 }

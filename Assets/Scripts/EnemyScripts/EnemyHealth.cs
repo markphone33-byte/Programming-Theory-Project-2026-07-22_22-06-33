@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -11,8 +9,16 @@ public class EnemyHealth : MonoBehaviour
     private TextMeshPro healthText;
     private GameObject playerCamera;
     private EnemyAttack enemyAttackScript;
+    private EnemyAudio enemyAudioScript;
     private LayerMask wallsAndEnemies;
     [SerializeField] private GameObject EnergyCrystal;
+    private Renderer[] renderers;
+    private Color[] originalColors;
+    [SerializeField] private GameObject enemyModel;
+    [SerializeField] private float flashDuration = 0.15f;
+    private Coroutine tookDamageFlash = null;
+    private EnemyMovement enemyMovementScript;
+    private float playerLightDistance;
 
     // Initalize Variables
     void Awake()
@@ -21,13 +27,22 @@ public class EnemyHealth : MonoBehaviour
         healthText = transform.Find("HealthText").GetComponent<TextMeshPro>();
         healthText.text = currentHealth.ToString();
         enemyAttackScript = GetComponent<EnemyAttack>();
+        enemyAudioScript = GetComponent<EnemyAudio>();
+        enemyMovementScript = GetComponent<EnemyMovement>();
         wallsAndEnemies = LayerMask.GetMask("Wall", "Enemy");
+        renderers = enemyModel.GetComponentsInChildren<Renderer>();
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            originalColors[i] = renderers[i].material.color;
+        }
     }
 
     // Initialize references to other game objects
     void Start()
     {
         playerCamera = GameObject.FindWithTag("MainCamera");
+        playerLightDistance = playerCamera.GetComponentInChildren<Light>().range;
     }
 
     // Reduces health and dies when at or below 0 health
@@ -35,6 +50,20 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         healthText.text = currentHealth.ToString();
+
+        enemyAudioScript.PlayGruntSoud();
+        
+        enemyMovementScript.GoToPosition(playerCamera.transform.position);
+
+        if (tookDamageFlash != null)
+        {
+            StopCoroutine(tookDamageFlash);
+        }
+        else
+        {
+            tookDamageFlash = StartCoroutine(DamageFlashRoutine(flashDuration));
+        }
+
         if (currentHealth <= 0)
         {
             Die();
@@ -42,6 +71,18 @@ public class EnemyHealth : MonoBehaviour
     }
 
     void Update()
+    {
+        // Makes health text invisible if player can't see the enemy and harder to see the farther away it is
+        HealthTextVisibility();
+    }
+
+    void LateUpdate()
+    {
+        // Makes the health text always face the player
+        healthText.transform.forward = playerCamera.transform.forward;
+    }
+
+    private void HealthTextVisibility()
     {
         // Fires a ray from the player to the enemy and stores the information in hit
         BoxCollider enemyCollider = GetComponent<BoxCollider>();
@@ -63,15 +104,9 @@ public class EnemyHealth : MonoBehaviour
         {
             color.a = 1;
             float playerDistance = enemyAttackScript.EnemyDistanceToPlayer();
-            color.r = Mathf.Clamp01(0.9f - Mathf.Round(playerDistance / 3) / 10);
+            color.r = Mathf.Clamp01(0.7f - playerDistance / playerLightDistance);
             healthText.color = color;
         }
-    }
-
-    void LateUpdate()
-    {
-        // Makes the health text always face the player
-        healthText.transform.forward = playerCamera.transform.forward;
     }
 
     private void Die()
@@ -80,5 +115,22 @@ public class EnemyHealth : MonoBehaviour
         Vector3 crystalPosition = transform.position;
         crystalPosition.y = 1;
         Instantiate(EnergyCrystal, crystalPosition, EnergyCrystal.transform.rotation);
+    }
+
+    private IEnumerator DamageFlashRoutine(float duration)
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.color = Color.red;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.color = originalColors[i];
+        }
+
+        tookDamageFlash = null;
     }
 }
