@@ -5,7 +5,6 @@ public class HealingCrystal : MonoBehaviour
 {
     private float nextHealTime;
     [SerializeField] private float healInterval = 2;
-    [SerializeField] private float healRadius = 2;
     [SerializeField] private float healPower = 5;
     private List<Collider> playersToHeal = new List<Collider>();
 

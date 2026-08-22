@@ -18,6 +18,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float flashDuration = 0.15f;
     private Coroutine tookDamageFlash = null;
     private EnemyMovement enemyMovementScript;
+    private float playerLightDistance;
 
     // Initalize Variables
     void Awake()
@@ -41,6 +42,7 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         playerCamera = GameObject.FindWithTag("MainCamera");
+        playerLightDistance = playerCamera.GetComponentInChildren<Light>().range;
     }
 
     // Reduces health and dies when at or below 0 health
@@ -102,7 +104,7 @@ public class EnemyHealth : MonoBehaviour
         {
             color.a = 1;
             float playerDistance = enemyAttackScript.EnemyDistanceToPlayer();
-            color.r = Mathf.Clamp01(0.9f - Mathf.Round(playerDistance / 3) / 10);
+            color.r = Mathf.Clamp01(0.7f - playerDistance / playerLightDistance);
             healthText.color = color;
         }
     }

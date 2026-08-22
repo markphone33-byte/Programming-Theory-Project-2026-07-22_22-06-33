@@ -16,7 +16,6 @@ public class FogOfWarController : MonoBehaviour
         {
             fogObject.material.color = Color.clear;
         }
-        Debug.Log("Fog Clear");
     }
 
     public void PlayerExitsCollider()
@@ -29,7 +28,6 @@ public class FogOfWarController : MonoBehaviour
                 fogObject.material.color = Color.black;
             }
             collidersPlayerIsIn = 0;
-            Debug.Log("Fog Reappear");
         }
     }
 
