@@ -6,7 +6,6 @@ public class UseEnergyCrystal : UseItem
     {
         if(PlayerInventory.Instance.RemoveItem(ItemManager.Instance.GetEnergyCrystalIndex(), LevelManager.Instance.crystalsNeeded))
         {
-            Debug.Log("Next Level");
             LevelManager.Instance.NextLevel();
         }
         else

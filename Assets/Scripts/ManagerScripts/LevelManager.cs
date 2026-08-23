@@ -12,11 +12,13 @@ public class LevelManager : MonoBehaviour
     public int crystalsNeeded { get; private set; }
     private GameObject enemyParent;
     private GameObject itemParent;
+    private Vector3 spawnPosition;
 
     void Awake()
     {
         Instance = this;
         level = 1;
+        spawnPosition = new Vector3(0, 0, -5);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +73,6 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        player.transform.position = Vector3.up;
+        player.transform.position = spawnPosition;
     }
 }

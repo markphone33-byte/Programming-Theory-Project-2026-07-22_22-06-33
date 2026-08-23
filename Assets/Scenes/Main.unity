@@ -3129,7 +3129,7 @@ Transform:
   m_GameObject: {fileID: 253728407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.79, y: 1.01, z: -4.5}
+  m_LocalPosition: {x: 0, y: 1.01, z: -5}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3273,7 +3273,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3377,10 +3377,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5df4825382d7b45b08edd05469006c82, type: 3}
   - {fileID: 8300000, guid: 752d0978cce854a7ab973365cf9364b6, type: 3}
   - {fileID: 8300000, guid: b545679313a2c49b99390cb91c4e26bd, type: 3}
-  baseFootstepSoundCooldown: 0.5
+  footstepBaseSoundCooldown: 0.5
   footstepAveragePitch: 0.8
   footstepPitchRange: 0.2
-  footstepBaseVolume: 0.15
+  footstepBaseVolume: 0.25
 --- !u!1 &262962540 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2323545202749464200, guid: 7aa050f6e5c2c49bd975daebc0871475, type: 3}
@@ -4231,7 +4231,7 @@ GameObject:
   - component: {fileID: 386101474}
   - component: {fileID: 386101477}
   - component: {fileID: 386101475}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: MiniMapCamera
   m_TagString: MiniMapCamera
   m_Icon: {fileID: 0}
@@ -9597,8 +9597,8 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 0.6132076, g: 0.59531033, b: 0.3268512, a: 1}
-  m_Intensity: 30
-  m_Range: 30
+  m_Intensity: 55
+  m_Range: 40
   m_SpotAngle: 94.57569
   m_InnerSpotAngle: 0
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -12007,7 +12007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1004018172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22147,7 +22147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1938451590
 Transform:
   m_ObjectHideFlags: 0
