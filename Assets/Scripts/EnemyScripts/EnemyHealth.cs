@@ -8,7 +8,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float currentHealth;
     private TextMeshPro healthText;
     private GameObject playerCamera;
-    private EnemyAttack enemyAttackScript;
+    private EnemyStatus enemyStatusScript;
     private EnemyAudio enemyAudioScript;
     private LayerMask wallsAndEnemies;
     [SerializeField] private GameObject EnergyCrystal;
@@ -26,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         healthText = transform.Find("HealthText").GetComponent<TextMeshPro>();
         healthText.text = currentHealth.ToString();
-        enemyAttackScript = GetComponent<EnemyAttack>();
+        enemyStatusScript = GetComponent<EnemyStatus>();
         enemyAudioScript = GetComponent<EnemyAudio>();
         enemyMovementScript = GetComponent<EnemyMovement>();
         wallsAndEnemies = LayerMask.GetMask("Wall", "Enemy");
@@ -53,7 +53,7 @@ public class EnemyHealth : MonoBehaviour
 
         enemyAudioScript.PlayGruntSoud();
 
-        enemyMovementScript.GoToPosition(playerCamera.transform.position);
+        enemyMovementScript.GoToPosition(playerCamera.transform.position, 5);
 
         if (tookDamageFlash == null)
         {
@@ -99,7 +99,7 @@ public class EnemyHealth : MonoBehaviour
         else if (didHit)
         {
             color.a = 1;
-            float playerDistance = enemyAttackScript.EnemyDistanceToPlayer();
+            float playerDistance = enemyStatusScript.DistanceToPlayer();
             color.r = Mathf.Clamp01(0.7f - playerDistance / playerLightDistance);
             healthText.color = color;
         }

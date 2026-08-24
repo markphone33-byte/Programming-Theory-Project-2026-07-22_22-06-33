@@ -193,18 +193,19 @@ GameObject:
   - component: {fileID: 797143082221903195}
   - component: {fileID: 5230266271837140557}
   - component: {fileID: 486206041457465752}
-  - component: {fileID: 8201923993127254851}
   - component: {fileID: 8725666968825493763}
   - component: {fileID: 4664262504471093566}
   - component: {fileID: 5846763926958567446}
   - component: {fileID: 8183766615150706429}
+  - component: {fileID: 5710748412811323656}
+  - component: {fileID: 7608110908121736235}
   m_Layer: 6
   m_Name: Baby Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2868972294250959722
 Transform:
   m_ObjectHideFlags: 0
@@ -295,28 +296,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &8201923993127254851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819138255295100886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9175f59f6f64d03ac9d8564cf2495d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  updateInterval: 0.2
-  baseMoveSpeed: 3.1
-  continueChaseTime: 4
-  visionDistance: 50
-  wanderDistance: 50
-  chaseSpeedBoost: 2
-  antiCirclingDistance: 5
-  antiCirclingRetargetTime: 0.1
-  slowBaseMoveSpeed: 1
-  slowAccelerationTime: 6
 --- !u!114 &8725666968825493763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +357,40 @@ MonoBehaviour:
   talkAudioValues: {fileID: 1731434897792462184}
   updateInterval: 2.5
   updateIntervalRange: 0.5
+--- !u!114 &5710748412811323656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819138255295100886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c2a885d71bd438d8231cf6878b0718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieMovement
+  updateInterval: 0.2
+  baseMoveSpeed: 3
+  continueChaseTime: 4
+  visionDistance: 50
+  wanderDistance: 50
+  antiCirclingDistance: 5
+  antiCirclingRetargetTime: 0.1
+  slowBaseMoveSpeed: 1
+  slowAccelerationTime: 6
+  chaseSpeedBoost: 2
+--- !u!114 &7608110908121736235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819138255295100886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eda964a166ce4e94b73ef388ae956fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatus
 --- !u!1 &3449252458235729230
 GameObject:
   m_ObjectHideFlags: 0

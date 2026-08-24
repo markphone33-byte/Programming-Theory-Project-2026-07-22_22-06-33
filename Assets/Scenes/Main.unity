@@ -9838,11 +9838,8 @@ MonoBehaviour:
   continueChaseTime: 4
   visionDistance: 50
   wanderDistance: 50
-  chaseSpeedBoost: 1.3
   antiCirclingDistance: 5
   antiCirclingRetargetTime: 0.1
-  slowBaseMoveSpeed: 2
-  slowAccelerationTime: 4
 --- !u!1 &825438392
 GameObject:
   m_ObjectHideFlags: 0
@@ -23985,7 +23982,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 713719918412708037, guid: 5ab20d7161ebd43d39a194c03cd39d4e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5ab20d7161ebd43d39a194c03cd39d4e, type: 3}
 --- !u!4 &3205105544361014998 stripped
 Transform:

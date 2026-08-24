@@ -193,11 +193,12 @@ GameObject:
   - component: {fileID: 2513938452085241053}
   - component: {fileID: 8024024533105786805}
   - component: {fileID: 4030931861561285111}
-  - component: {fileID: 5464519002833478046}
   - component: {fileID: 4277101174358249009}
   - component: {fileID: 5829094279945111857}
   - component: {fileID: 5216121732141062791}
   - component: {fileID: 5507661082894987661}
+  - component: {fileID: 4801024135095145763}
+  - component: {fileID: 7559541398587754177}
   m_Layer: 6
   m_Name: Zombie
   m_TagString: Untagged
@@ -295,28 +296,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &5464519002833478046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167877935087099653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9175f59f6f64d03ac9d8564cf2495d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  updateInterval: 0.5
-  baseMoveSpeed: 3
-  continueChaseTime: 4
-  visionDistance: 50
-  wanderDistance: 50
-  chaseSpeedBoost: 1.5
-  antiCirclingDistance: 5
-  antiCirclingRetargetTime: 0.1
-  slowBaseMoveSpeed: 2
-  slowAccelerationTime: 2
 --- !u!114 &4277101174358249009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +357,40 @@ MonoBehaviour:
   talkAudioValues: {fileID: 6699221887156601203}
   updateInterval: 4
   updateIntervalRange: 1
+--- !u!114 &4801024135095145763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167877935087099653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c2a885d71bd438d8231cf6878b0718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieMovement
+  updateInterval: 0.5
+  baseMoveSpeed: 3
+  continueChaseTime: 4
+  visionDistance: 50
+  wanderDistance: 50
+  antiCirclingDistance: 5
+  antiCirclingRetargetTime: 0.1
+  slowBaseMoveSpeed: 2
+  slowAccelerationTime: 2
+  chaseSpeedBoost: 1.5
+--- !u!114 &7559541398587754177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167877935087099653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eda964a166ce4e94b73ef388ae956fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatus
 --- !u!1 &2162620313972597053
 GameObject:
   m_ObjectHideFlags: 0

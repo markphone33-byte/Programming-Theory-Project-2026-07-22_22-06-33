@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAudio : MonoBehaviour
@@ -10,12 +9,12 @@ public class EnemyAudio : MonoBehaviour
     [SerializeField] private float updateInterval = 2;
     [SerializeField] private float updateIntervalRange = 2;
     private Transform player;
-    private EnemyAttack enemyAttackScript;
+    private EnemyStatus enemyStatusScript;
 
     void Awake()
     {
         nextUpdateTime = Time.time;
-        enemyAttackScript = GetComponent<EnemyAttack>();
+        enemyStatusScript = GetComponent<EnemyStatus>();
     }
 
     void Start()
@@ -28,7 +27,7 @@ public class EnemyAudio : MonoBehaviour
         if (nextUpdateTime < Time.time)
         {
             nextUpdateTime += updateInterval + Random.Range(-updateIntervalRange, updateIntervalRange);
-            if (enemyAttackScript.EnemyDistanceToPlayer() < talkAudioValues.GetMaxDistance())
+            if (enemyStatusScript.DistanceToPlayer() < talkAudioValues.GetMaxDistance())
             {
                 if (!PlayerCanSee())
                 {

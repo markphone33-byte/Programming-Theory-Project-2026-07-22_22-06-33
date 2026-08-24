@@ -4,127 +4,116 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private Transform player;
-    private NavMeshAgent agent;
-    private float nextUpdateTime;
-    [SerializeField] private float updateInterval = 0.5f;
-    private float moveSpeed = 3;
-    [SerializeField] private float baseMoveSpeed = 3;
-    private EnemyAttack enemyAttackScript;
-    private bool canRetarget = true;
-    [SerializeField] private float continueChaseTime = 4;
-    private float chaseTime = 0;
-    [SerializeField] private float visionDistance = 50;
-    [SerializeField] private float wanderDistance = 50;
-    [SerializeField] private float chaseSpeedBoost = 1.3f;
-    private NavMeshQueryFilter navMeshFilter;
-    private EnemyAnimation enemyAnimation;
-    [SerializeField] private float antiCirclingDistance = 5;
-    [SerializeField] private float antiCirclingRetargetTime = 0.1f;
-    private float lastUpdateTime;
-    private bool isSlowlyAccelerating;
-    [SerializeField] private float slowBaseMoveSpeed = 2;
-    [SerializeField] private float slowAccelerationTime = 4;
+    protected Transform player;
+    protected NavMeshAgent agent;
+    protected float nextUpdateTime;
+    [SerializeField] protected float updateInterval = 0.5f;
+    protected float moveSpeed;
+    [SerializeField] protected float baseMoveSpeed = 3;
+    protected EnemyStatus enemyStatusScript;
+    protected bool canRetarget = true;
+    [SerializeField] protected float continueChaseTime = 4;
+    protected float chaseTime = 0;
+    [SerializeField] protected float visionDistance = 50;
+    [SerializeField] protected float wanderDistance = 50;
+    protected NavMeshQueryFilter navMeshFilter;
+    protected EnemyAnimation enemyAnimation;
+    [SerializeField] protected float antiCirclingDistance = 5;
+    [SerializeField] protected float antiCirclingRetargetTime = 0.1f;
+    protected float lastUpdateTime;
 
     // Initializes variables
-    void Awake()
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         nextUpdateTime = Time.time;
-        enemyAttackScript = GetComponent<EnemyAttack>();
+        enemyStatusScript = GetComponent<EnemyStatus>();
         navMeshFilter = new NavMeshQueryFilter
         {
             agentTypeID = agent.agentTypeID,
             areaMask = agent.areaMask
         };
         enemyAnimation = GetComponent<EnemyAnimation>();
+        moveSpeed = baseMoveSpeed;
     }
     // Initializes refereences to other game objects
-    void Start()
+    protected virtual void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
+        // If chasing the player and the player is very close then constantly retarget towards them. Makes it is harder to circle around the enemy
+        if (enemyStatusScript.DistanceToPlayer() < antiCirclingDistance && chaseTime > 0 && nextUpdateTime > Time.time + antiCirclingRetargetTime)
+        {
+            nextUpdateTime = Time.time + antiCirclingRetargetTime;
+        }
+
         // If the enemy stops moving, it will retarget
-        if (agent.velocity == Vector3.zero && !enemyAttackScript.isStunned && canRetarget)
+        if (agent.velocity == Vector3.zero && !enemyStatusScript.isStunned && canRetarget)
         {
             StartCoroutine(RetargetCooldown(0.1f));
             nextUpdateTime = Time.time;
         }
 
         // Every updateInterval seconds, the enemy will retarget
-        if (Time.time >= nextUpdateTime && !enemyAttackScript.isStunned)
+        if (Time.time >= nextUpdateTime && !enemyStatusScript.isStunned)
         {
             nextUpdateTime = Time.time + updateInterval;
             Movement();
             enemyAnimation.AnimateMovement(agent.speed, chaseTime > 0);
             lastUpdateTime = Time.time;
         }
-
-        // If chasing the player and the player is very close then constantly retarget towards them. Makes it is harder to circle around the enemy
-        if (enemyAttackScript.EnemyDistanceToPlayer() < antiCirclingDistance && chaseTime > 0 && nextUpdateTime > Time.time + antiCirclingRetargetTime)
-        {
-            nextUpdateTime = Time.time + antiCirclingRetargetTime;
-        }
     }
 
-    private void Movement()
+    protected virtual void Movement()
     {
-        // Chases the player with increased speed under certain conditions
-
-        if (enemyAttackScript.EnemyDistanceToPlayer() < visionDistance) // Player is within 50 units
+        //If not in chase then wanders around the map
+        if (enemyStatusScript.DistanceToPlayer() > visionDistance) // Player is outside vision radius
         {
-            NavMeshPath pathToPlayer = new NavMeshPath();
-            NavMesh.CalculatePath(transform.position, player.position, navMeshFilter, pathToPlayer);
-            if (pathToPlayer.status == NavMeshPathStatus.PathComplete) // Player is reachable
-            {
-                if (PlayerInSight()) // Player is not behind the enemy's line of sight or behind a wall
-                {
-                    // If the enemy loses chase with the player but then find them again within the chaseTime then slowly accelerate back to full speed
-                    if (!isSlowlyAccelerating && chaseTime > 0 && chaseTime < continueChaseTime)
-                    {
-                        StartCoroutine(SlowlyAccelerate(slowAccelerationTime));
-                    }
-                    // When chasing the player enemy will predict where the player is headed and go there
-                    agent.SetDestination(player.position + player.GetComponent<Rigidbody>().linearVelocity / 2);
-                    agent.speed = moveSpeed * chaseSpeedBoost;
-                    chaseTime = continueChaseTime;
-                    return; // Stops script here so enemy chases rather than wanders
-                }
-                // Enemy will continue to chase a little bit after player is out of sight, but does so at reduced speed
-                else if (chaseTime > 0)
-                {
-                    chaseTime -= Time.time - lastUpdateTime;
-                    agent.SetDestination(player.position);
-                    agent.speed = moveSpeed;
-                    return; // Stops script here so enemy chases rather than wanders
-                }
-            }
+            Wander();
         }
-        Wander(); //If not in chase then wanders around the map at normal speed
+        else if (!PlayerIsReachable()) // Player is not reachable on NavMesh
+        {
+            Wander();
+        }
+        else if (!PlayerInSight() && chaseTime <= 0)
+        {
+            Wander();
+        }
+
+        if (PlayerInSight()) // Player is not behind the enemy nor behind a wall
+        {
+            ChasePlayer();
+        }
+        // Enemy will continue to chase a little bit after player is out of sight
+        else if (chaseTime > 0)
+        {
+            ContinueChase();
+        }
     }
 
-    private void Wander()
+    protected virtual void Wander()
     {
         // If the enemy is nearing its destination then randomly pick a new destination
         if (agent.remainingDistance <= agent.stoppingDistance + 1)
         {
-            NavMeshHit wanderHit; // Will store where the enemy's wander position
+            // NavMeshHit wanderHit; // Will store where the enemy's wander position
             Vector3 wanderPosition = transform.position + Random.insideUnitSphere * wanderDistance; // Picks a random position within 50 units of the enemy's current position 
             wanderPosition.y = transform.position.y; // The map has no variation in height
-            NavMesh.SamplePosition(wanderPosition, out wanderHit, wanderDistance, NavMesh.AllAreas); // Finds the nearest valid position on the NavMesh to the random position and places it in wanderHit
-            agent.SetDestination(wanderHit.position);
+            // NavMesh.SamplePosition(wanderPosition, out wanderHit, wanderDistance, NavMesh.AllAreas); // Finds the nearest valid position on the NavMesh to the random position and places it in wanderHit
+            // agent.SetDestination(wanderHit.position);
+            GoToPosition(wanderPosition, wanderDistance);
             agent.speed = moveSpeed;
         }
     }
 
-    private bool PlayerInSight()
+    protected bool PlayerInSight()
     {
         // If player is just circling around the enemy, they are still counted as in line of sight
-        if (enemyAttackScript.EnemyDistanceToPlayer() < antiCirclingDistance && chaseTime > 0)
+        if (enemyStatusScript.DistanceToPlayer() < antiCirclingDistance && chaseTime > 0)
         {
             return true;
         }
@@ -146,37 +135,45 @@ public class EnemyMovement : MonoBehaviour
         return false;
     }
 
-    IEnumerator RetargetCooldown(float delay)
+    protected virtual IEnumerator RetargetCooldown(float delay)
     {
         canRetarget = false;
         yield return new WaitForSeconds(delay);
         canRetarget = true;
     }
 
-    IEnumerator SlowlyAccelerate(float duration)
-    {
-        isSlowlyAccelerating = true;
-        moveSpeed = slowBaseMoveSpeed;
-        while (moveSpeed < baseMoveSpeed)
-        {
-            moveSpeed += (baseMoveSpeed - slowBaseMoveSpeed) * 0.8f * Time.deltaTime / duration;
-            yield return new WaitForEndOfFrame();
-        }
-        moveSpeed = baseMoveSpeed;
-        isSlowlyAccelerating = false;
-    }
-
-    public void GoToPosition(Vector3 position)
+    public void GoToPosition(Vector3 position, float maxSampleDistance)
     {
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, 5, navMeshFilter))
+        if (NavMesh.SamplePosition(position, out hit, maxSampleDistance, navMeshFilter))
         {
             NavMeshPath path = new NavMeshPath();
             if (NavMesh.CalculatePath(transform.position, hit.position, navMeshFilter, path))
             {
                 agent.SetDestination(hit.position);
-                nextUpdateTime = Time.time + updateInterval;
+                nextUpdateTime = Time.time + updateInterval; // Pushes back update time so enemy doesn't retarget right away
             }
         }
+    }
+
+    protected virtual bool PlayerIsReachable()
+    {
+        NavMeshPath pathToPlayer = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, player.position, navMeshFilter, pathToPlayer);
+        return pathToPlayer.status == NavMeshPathStatus.PathComplete;
+    }
+
+    protected virtual void ChasePlayer()
+    {
+        // When chasing the player enemy will predict where the player is headed and go there
+        agent.SetDestination(player.position + player.GetComponent<Rigidbody>().linearVelocity / 2);
+        chaseTime = continueChaseTime;
+    }
+
+    protected virtual void ContinueChase()
+    {
+        chaseTime -= Time.time - lastUpdateTime;
+        agent.SetDestination(player.position);
+        agent.speed = moveSpeed;
     }
 }

@@ -3,24 +3,19 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator animator;
-    private EnemyAttack enemyAttackScript;
+    private EnemyStatus enemyStatusScript;
 
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        enemyAttackScript = GetComponent<EnemyAttack>();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
+        enemyStatusScript = GetComponent<EnemyStatus>();
     }
 
     public void AnimateMovement(float speed, bool inChase)
     {
         animator.SetFloat("Speed", speed / 5);
         // If idle and just started moving then set IsIdle to false
-        if (speed > 0 && animator.GetBool("IsIdle") && !enemyAttackScript.isStunned)
+        if (speed > 0 && animator.GetBool("IsIdle") && !enemyStatusScript.isStunned)
         {
             animator.SetBool("IsIdle", false);
         }

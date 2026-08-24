@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartLevel()
     {
-        crystalsNeeded = 3 + 2 * level;
+        crystalsNeeded = 2 + 2 * level;
         levelText.text = "Level: " + level;
         crystalsNeededText.text = "Crystals Needed: " + crystalsNeeded;
 
