@@ -25,7 +25,7 @@ public class UseUndroppableItem : UseItem
 
     private void FistsAttack()
     {
-        Vector3 attackHalfExtents = new Vector3(2f, 1.3f, 0.7f);
+        Vector3 attackHalfExtents = new Vector3(1.8f, 1.3f, 0.4f);
         float damage = 10f;
         float particleSpeed = 8f;
         playerAttackScript.BasicMeleeAttack(damage, attackHalfExtents, particleSpeed);

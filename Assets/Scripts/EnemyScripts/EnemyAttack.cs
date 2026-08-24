@@ -16,6 +16,7 @@ public class EnemyAttack : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = attackRange;
         enemyAnimation = GetComponent<EnemyAnimation>();
     }
     // Initializes refereences to other game objects

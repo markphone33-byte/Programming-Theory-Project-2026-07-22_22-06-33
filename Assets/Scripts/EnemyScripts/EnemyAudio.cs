@@ -3,15 +3,9 @@ using UnityEngine;
 
 public class EnemyAudio : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] footstepClips;
-    [SerializeField] private AudioClip[] gruntClips;
-    [SerializeField] private AudioClip[] talkClips;
-    [SerializeField] private AudioSource footstepsAudioSource;
-    [SerializeField] private AudioSource gruntAudioSource;
-    [SerializeField] private AudioSource talkAudioSource;
-    [SerializeField] private float averagePitch = 1f;
-    [SerializeField] private float pitchRange = 0.2f;
-    [SerializeField] private float volume = 1;
+    [SerializeField] private AudioSourceValues footstepAudioValues;
+    [SerializeField] private AudioSourceValues gruntAudioValues;
+    [SerializeField] private AudioSourceValues talkAudioValues;
     private float nextUpdateTime;
     [SerializeField] private float updateInterval = 2;
     [SerializeField] private float updateIntervalRange = 2;
@@ -34,7 +28,7 @@ public class EnemyAudio : MonoBehaviour
         if (nextUpdateTime < Time.time)
         {
             nextUpdateTime += updateInterval + Random.Range(-updateIntervalRange, updateIntervalRange);
-            if (enemyAttackScript.EnemyDistanceToPlayer() < talkAudioSource.maxDistance)
+            if (enemyAttackScript.EnemyDistanceToPlayer() < talkAudioValues.GetMaxDistance())
             {
                 if (!PlayerCanSee())
                 {
@@ -46,35 +40,17 @@ public class EnemyAudio : MonoBehaviour
 
     public void PlayFootstepSound()
     {
-        float averagePitch = 1f;
-        float pitchRange = 0.2f;
-        float volume = 0.4f;
-
-        AudioClip randomClip = footstepClips[Random.Range(0, footstepClips.Length)];
-        footstepsAudioSource.pitch = Random.Range(averagePitch - pitchRange, averagePitch + pitchRange);
-        footstepsAudioSource.PlayOneShot(randomClip, volume);
+        footstepAudioValues.PlayRandomClip();
     }
 
     public void PlayGruntSoud()
     {
-        float averagePitch = 0.8f;
-        float pitchRange = 0.1f;
-        float volume = 0.2f;
-
-        AudioClip randomClip = gruntClips[Random.Range(0, gruntClips.Length)];
-        gruntAudioSource.pitch = Random.Range(averagePitch - pitchRange, averagePitch + pitchRange);
-        gruntAudioSource.PlayOneShot(randomClip, volume);
+        gruntAudioValues.PlayRandomClip();
     }
 
     private void PlayTalkSoud()
     {
-        float averagePitch = 1f;
-        float pitchRange = 0.2f;
-        float volume = 0.2f;
-
-        AudioClip randomClip = talkClips[Random.Range(0, talkClips.Length)];
-        talkAudioSource.pitch = Random.Range(averagePitch - pitchRange, averagePitch + pitchRange);
-        talkAudioSource.PlayOneShot(randomClip, volume);
+        talkAudioValues.PlayRandomClip();
     }
 
     private bool PlayerCanSee()

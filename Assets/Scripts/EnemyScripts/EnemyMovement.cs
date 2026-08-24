@@ -8,7 +8,8 @@ public class EnemyMovement : MonoBehaviour
     private NavMeshAgent agent;
     private float nextUpdateTime;
     [SerializeField] private float updateInterval = 0.5f;
-    [SerializeField] private float moveSpeed = 3;
+    private float moveSpeed = 3;
+    [SerializeField] private float baseMoveSpeed = 3;
     private EnemyAttack enemyAttackScript;
     private bool canRetarget = true;
     [SerializeField] private float continueChaseTime = 4;
@@ -18,7 +19,12 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float chaseSpeedBoost = 1.3f;
     private NavMeshQueryFilter navMeshFilter;
     private EnemyAnimation enemyAnimation;
-
+    [SerializeField] private float antiCirclingDistance = 5;
+    [SerializeField] private float antiCirclingRetargetTime = 0.1f;
+    private float lastUpdateTime;
+    private bool isSlowlyAccelerating;
+    [SerializeField] private float slowBaseMoveSpeed = 2;
+    [SerializeField] private float slowAccelerationTime = 4;
 
     // Initializes variables
     void Awake()
@@ -55,6 +61,13 @@ public class EnemyMovement : MonoBehaviour
             nextUpdateTime = Time.time + updateInterval;
             Movement();
             enemyAnimation.AnimateMovement(agent.speed, chaseTime > 0);
+            lastUpdateTime = Time.time;
+        }
+
+        // If chasing the player and the player is very close then constantly retarget towards them. Makes it is harder to circle around the enemy
+        if (enemyAttackScript.EnemyDistanceToPlayer() < antiCirclingDistance && chaseTime > 0 && nextUpdateTime > Time.time + antiCirclingRetargetTime)
+        {
+            nextUpdateTime = Time.time + antiCirclingRetargetTime;
         }
     }
 
@@ -70,7 +83,13 @@ public class EnemyMovement : MonoBehaviour
             {
                 if (PlayerInSight()) // Player is not behind the enemy's line of sight or behind a wall
                 {
-                    agent.SetDestination(player.position);
+                    // If the enemy loses chase with the player but then find them again within the chaseTime then slowly accelerate back to full speed
+                    if (!isSlowlyAccelerating && chaseTime > 0 && chaseTime < continueChaseTime)
+                    {
+                        StartCoroutine(SlowlyAccelerate(slowAccelerationTime));
+                    }
+                    // When chasing the player enemy will predict where the player is headed and go there
+                    agent.SetDestination(player.position + player.GetComponent<Rigidbody>().linearVelocity / 2);
                     agent.speed = moveSpeed * chaseSpeedBoost;
                     chaseTime = continueChaseTime;
                     return; // Stops script here so enemy chases rather than wanders
@@ -78,9 +97,9 @@ public class EnemyMovement : MonoBehaviour
                 // Enemy will continue to chase a little bit after player is out of sight, but does so at reduced speed
                 else if (chaseTime > 0)
                 {
-                    chaseTime -= updateInterval;
+                    chaseTime -= Time.time - lastUpdateTime;
                     agent.SetDestination(player.position);
-                    agent.speed = moveSpeed / chaseSpeedBoost;
+                    agent.speed = moveSpeed;
                     return; // Stops script here so enemy chases rather than wanders
                 }
             }
@@ -104,6 +123,12 @@ public class EnemyMovement : MonoBehaviour
 
     private bool PlayerInSight()
     {
+        // If player is just circling around the enemy, they are still counted as in line of sight
+        if (enemyAttackScript.EnemyDistanceToPlayer() < antiCirclingDistance && chaseTime > 0)
+        {
+            return true;
+        }
+
         Vector3 directionOfPlayer = (player.position - transform.position).normalized;
         if (Vector3.Angle(transform.forward, directionOfPlayer) <= 90) // Player is not behind the enemy
         {
@@ -126,6 +151,19 @@ public class EnemyMovement : MonoBehaviour
         canRetarget = false;
         yield return new WaitForSeconds(delay);
         canRetarget = true;
+    }
+
+    IEnumerator SlowlyAccelerate(float duration)
+    {
+        isSlowlyAccelerating = true;
+        moveSpeed = slowBaseMoveSpeed;
+        while (moveSpeed < baseMoveSpeed)
+        {
+            moveSpeed += (baseMoveSpeed - slowBaseMoveSpeed) * 0.8f * Time.deltaTime / duration;
+            yield return new WaitForEndOfFrame();
+        }
+        moveSpeed = baseMoveSpeed;
+        isSlowlyAccelerating = false;
     }
 
     public void GoToPosition(Vector3 position)

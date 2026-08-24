@@ -52,14 +52,10 @@ public class EnemyHealth : MonoBehaviour
         healthText.text = currentHealth.ToString();
 
         enemyAudioScript.PlayGruntSoud();
-        
+
         enemyMovementScript.GoToPosition(playerCamera.transform.position);
 
-        if (tookDamageFlash != null)
-        {
-            StopCoroutine(tookDamageFlash);
-        }
-        else
+        if (tookDamageFlash == null)
         {
             tookDamageFlash = StartCoroutine(DamageFlashRoutine(flashDuration));
         }
